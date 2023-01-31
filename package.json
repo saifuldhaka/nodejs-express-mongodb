@@ -12,7 +12,8 @@
     "express",
     "mongodb",
     "rest",
-    "api"
+    "api",
+    "jwt"
   ],
   "author": "saiful",
   "license": "ISC",
