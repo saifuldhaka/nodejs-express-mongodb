@@ -13,3 +13,7 @@ exports.allAccess = (req, res) => {
   exports.moderatorBoard = (req, res) => {
     res.status(200).send("Moderator Content.");
   };
+
+  exports.authorBoard = (req, res) => {
+    res.status(200).send("Author Content.");
+  };
