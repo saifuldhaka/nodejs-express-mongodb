@@ -1,5 +1,7 @@
-# nodejs-express-mongodb
+# nodejs-express-mongodb Project outline
 
+
+# Configuration
 1. create config folder inside app folder
 2. configure db.config.js as app>config>db.config.js
 3. configure DB as 
