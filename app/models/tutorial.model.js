@@ -1,6 +1,7 @@
 module.exports =( mongoose, mongoosePaginate) => {
     var schema = mongoose.Schema(
       {
+        author_id: String,
         title: String,
         description: String,
         published: Boolean
