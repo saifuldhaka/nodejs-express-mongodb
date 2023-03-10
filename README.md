@@ -9,52 +9,52 @@ User Roles
 
 Guest user
 -----------------
-a. can see the tutorial list and search
-b. can read first 150 words
-c. can do registration 
+1. can see the tutorial list and search
+2. can read first 150 words
+3. can do registration 
 
 
 Registered user
 -----------------
-a. update profile
-b. change password
-c. can see the tutorial list and search
-d. can read first 150 words if not purchase
-e. can see his purchased tutorial list
-f. can read the full tutorial
+1. update profile
+2. change password
+3. can see the tutorial list and search
+4. can read first 150 words if not purchase
+5. can see his purchased tutorial list
+6. can read the full tutorial
 
 Author user
 -----------------
-a. update profile
-b. change password
-c. can see the tutorial list and search
-d. can read first 150 words if not purchase
-e. can see his purchased tutorial list
-f. can read the full tutorial
-g. can see his own tutorial list
-h. can write his own tutorial
-i. can update his own tutorial
+1. update profile
+2. change password
+3. can see the tutorial list and search
+4. can read first 150 words if not purchase
+5. can see his purchased tutorial list
+6. can read the full tutorial
+7. can see his own tutorial list
+8. can write his own tutorial
+9. can update his own tutorial
 
 Moderator user
 -----------------
-a. update profile
-b. change password
-c. can see the tutorial list and search
-f. can read the full tutorial
-g. can publish or un-publish the tutorial
+1. update profile
+2. change password
+3. can see the tutorial list and search
+4. can read the full tutorial
+5. can publish or un-publish the tutorial
 
 
 Admin user
 -----------------
-a. update profile
-b. change password
-c. Moderator list (add , edit, delete )
-d. Author list
-e. Registered User list
-f. can see the tutorial list and search
-g. can read the full tutorial
-h. can publish or un-publish the tutorial
-i. order list 
+1. update profile
+2. change password
+3. Moderator list (add , edit, delete )
+4. Author list
+5. Registered User list
+6. can see the tutorial list and search
+7. can read the full tutorial
+8. can publish or un-publish the tutorial
+9. order list 
 
 
 
