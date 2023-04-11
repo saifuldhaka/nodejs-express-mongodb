@@ -33,9 +33,21 @@ module.exports = app => {
     /* AUTHOR ROLE */
     // Create a new Tutorial
     router.post("/tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorials.create);
+    router.get("/my-tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorials.findMyTutorials);
+   
+    
+
+    
+
+
+
     
     /* MODERATOR ROLE */ 
     
+
+
+
+
 
     // Retrieve all published Tutorials and has admin access
     router.get("/published", [authJwt.verifyToken, authJwt.isAdmin ], tutorials.findAllPublished);

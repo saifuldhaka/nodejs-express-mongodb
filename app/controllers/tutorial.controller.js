@@ -4,10 +4,12 @@ const db = require("../models");
 const Tutorial = db.tutorials;
 
 const getPagination = (page, size) => {
-  const limit = size ? +size : 10;
-  const offset = page ? page * limit : 1;
+  const limit = size ? +size : 30;
+  const offset = page ? page * limit : 0;
 
-  return { limit, offset };
+  const sort =  {createdAt:-1};
+
+  return { limit, offset, sort };
 };
 
 const loginUserId = '';
@@ -62,13 +64,14 @@ exports.create = (req, res) => {
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
   const { page, size, title } = req.query;
+
   var condition = title
     ? { title: { $regex: new RegExp(title), $options: "i" } }
     : {};
 
-  const { limit, offset } = getPagination(page, size);
+  const { limit, offset, sort } = getPagination(page, size);
 
-  Tutorial.paginate(condition, { offset, limit })
+  Tutorial.paginate(condition, { limit, offset, sort })
     .then((data) => {
       res.send({
         totalItems: data.totalDocs,
@@ -169,9 +172,9 @@ exports.deleteAll = (req, res) => {
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
   const { page, size } = req.query;
-  const { limit, offset } = getPagination(page, size);
+  const { limit, offset, sort } = getPagination(page, size);
 
-  Tutorial.paginate({ published: true }, { offset, limit })
+  Tutorial.paginate({ published: true }, { offset, limit, sort })
     .then((data) => {
       res.send({
         totalItems: data.totalDocs,
@@ -187,3 +190,39 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+
+// Find all My Tutorials
+exports.findMyTutorials = (req, res) => {
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+
+  const { page, size, title } = req.query;
+  
+  
+  // var condition = title
+  //   ? { title: { $regex: new RegExp(title), $options: "i" } }
+  //   : {};
+
+  var condition = { 
+    author_id: this.loginUserId,
+
+  };    
+
+  const { limit, offset, sort  } = getPagination(page, size);
+
+  Tutorial.paginate(condition, { offset, limit , sort })
+    .then((data) => {
+      res.send({
+        totalItems: data.totalDocs,
+        tutorials: data.docs,
+        totalPages: data.totalPages,
+        currentPage: data.page - 1,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving tutorials.",
+      });
+    });
+}
