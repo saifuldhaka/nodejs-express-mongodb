@@ -18,11 +18,24 @@ module.exports = app => {
     var router = require("express").Router();
     app.use("/api/tutorials", router);
 
-    // Create a new Tutorial
-    router.post("/", tutorials.create);
+    
 
     // Retrieve all Tutorials and no need login
-    router.get("/", tutorials.findAll);
+    // router.get("/", tutorials.findAll);
+
+
+
+
+    /* USER ROLE  */ 
+    router.get("/tutorials", tutorials.findAll);  
+    
+    
+    /* AUTHOR ROLE */
+    // Create a new Tutorial
+    router.post("/tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorials.create);
+    
+    /* MODERATOR ROLE */ 
+    
 
     // Retrieve all published Tutorials and has admin access
     router.get("/published", [authJwt.verifyToken, authJwt.isAdmin ], tutorials.findAllPublished);

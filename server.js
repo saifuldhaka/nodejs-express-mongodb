@@ -39,7 +39,6 @@ db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`
     process.exit();
 })
 
-
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to NodeExpress application." });

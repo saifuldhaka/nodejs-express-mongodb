@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+const config = require("../config/auth.config.js");
 const db = require("../models");
 const Tutorial = db.tutorials;
 
@@ -8,18 +10,38 @@ const getPagination = (page, size) => {
   return { limit, offset };
 };
 
+const loginUserId = '';
+
+const findUserId = (req, res, next) => {
+  let token = req;  
+  if (!token) {
+    return res.status(403).send({ message: "No token provided!" });
+  }
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Unauthorized!" });
+    }
+    this.loginUserId = decoded.id;
+  });
+};
+
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
+  
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+    
   // Validate request
   if (!req.body.title) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
 
-  // Create a Tutorial
+   // Create a Tutorial
   const tutorial = new Tutorial({
     title: req.body.title,
     description: req.body.description,
+    author_id: this.loginUserId,
     published: req.body.published ? req.body.published : false,
   });
 
