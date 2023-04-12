@@ -21,13 +21,13 @@ module.exports = app => {
     
 
     // Retrieve all Tutorials and no need login
-    // router.get("/", tutorials.findAll);
+    // router.get("/", tutorials.findAllPublished);
 
 
 
 
     /* USER ROLE  */ 
-    router.get("/tutorials", tutorials.findAll);  
+    router.get("/tutorials", tutorials.findAllPublished);  
     
     
     /* AUTHOR ROLE */
@@ -41,7 +41,7 @@ module.exports = app => {
 
 
 
-    
+
     /* MODERATOR ROLE */ 
     
 
@@ -50,7 +50,7 @@ module.exports = app => {
 
 
     // Retrieve all published Tutorials and has admin access
-    router.get("/published", [authJwt.verifyToken, authJwt.isAdmin ], tutorials.findAllPublished);
+    // router.get("/published", [authJwt.verifyToken, authJwt.isAdmin ], tutorials.findAllPublished);
 
     // Retrieve a single Tutorial with id and can see after login
     router.get("/:id", [authJwt.verifyToken], tutorials.findOne)

@@ -7,9 +7,7 @@ const getPagination = (page, size) => {
   const limit = size ? +size : 30;
   const offset = page ? page * limit : 0;
 
-  const sort =  {createdAt:-1};
-
-  return { limit, offset, sort };
+  return { limit, offset };
 };
 
 const loginUserId = '';
@@ -65,17 +63,40 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const { page, size, title } = req.query;
 
-  var condition = title
-    ? { title: { $regex: new RegExp(title), $options: "i" } }
-    : {};
+  var conditions = { 
+    // author_id: this.loginUserId,
+  };
+  if(title){
+    conditions.title = { $regex: new RegExp(title), $options: "i" }
+  }    
 
-  const { limit, offset, sort } = getPagination(page, size);
+  var options = {
+    sort: ({ createdAt: -1 })
+  };
 
-  Tutorial.paginate(condition, { limit, offset, sort })
+  const { limit, offset  } = getPagination(page, size);
+
+  Tutorial.paginate(conditions, { limit, offset, options })
     .then((data) => {
+
+      const tempTutorials = [];
+      var tutorials = data.docs;
+      tutorials.forEach((tutorial) => {
+        var temp = {
+          "author_id": tutorial.author_id,
+          "title": tutorial.title,
+          "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
+          "published": tutorial.published,
+          "createdAt": tutorial.createdAt,
+          "updatedAt": tutorial.updatedAt,
+          "id": tutorial.id
+        };
+        tempTutorials.push(temp);
+      });
+
       res.send({
         totalItems: data.totalDocs,
-        tutorials: data.docs,
+        tutorials: tempTutorials,
         totalPages: data.totalPages,
         currentPage: data.page - 1,
       });
@@ -171,14 +192,43 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
-  const { page, size } = req.query;
-  const { limit, offset, sort } = getPagination(page, size);
+  const { page, size, title } = req.query;
 
-  Tutorial.paginate({ published: true }, { offset, limit, sort })
+  var conditions = { 
+    // author_id: this.loginUserId,
+    published: true
+  };
+  if(title){
+    conditions.title = { $regex: new RegExp(title), $options: "i" }
+  }    
+
+  var options = {
+    sort: ({ createdAt: -1 })
+  };
+
+  const { limit, offset  } = getPagination(page, size);
+
+  Tutorial.paginate(conditions, { offset, limit, options })
     .then((data) => {
+
+      const tempTutorials = [];
+      var tutorials = data.docs;
+      tutorials.forEach((tutorial) => {
+        var temp = {
+          "author_id": tutorial.author_id,
+          "title": tutorial.title,
+          "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
+          "published": tutorial.published,
+          "createdAt": tutorial.createdAt,
+          "updatedAt": tutorial.updatedAt,
+          "id": tutorial.id
+        };
+        tempTutorials.push(temp);
+      });
+
       res.send({
         totalItems: data.totalDocs,
-        tutorials: data.docs,
+        tutorials: tempTutorials,
         totalPages: data.totalPages,
         currentPage: data.page - 1,
       });
@@ -197,24 +247,40 @@ exports.findMyTutorials = (req, res) => {
   findUserId(token);
 
   const { page, size, title } = req.query;
-  
-  
-  // var condition = title
-  //   ? { title: { $regex: new RegExp(title), $options: "i" } }
-  //   : {};
 
-  var condition = { 
+  var conditions = { 
     author_id: this.loginUserId,
+  };
+  if(title){
+    conditions.title = { $regex: new RegExp(title), $options: "i" }
+  }    
 
-  };    
+  var options = {
+    sort: ({ createdAt: -1 })
+  };
 
-  const { limit, offset, sort  } = getPagination(page, size);
+  const { limit, offset  } = getPagination(page, size);
 
-  Tutorial.paginate(condition, { offset, limit , sort })
+  Tutorial.paginate(conditions, { offset, limit , options })
     .then((data) => {
+      const tempTutorials = [];
+      var tutorials = data.docs;
+      tutorials.forEach((tutorial) => {
+        var temp = {
+          "author_id": tutorial.author_id,
+          "title": tutorial.title,
+          "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
+          "published": tutorial.published,
+          "createdAt": tutorial.createdAt,
+          "updatedAt": tutorial.updatedAt,
+          "id": tutorial.id
+        };
+        tempTutorials.push(temp);
+      });
+
       res.send({
         totalItems: data.totalDocs,
-        tutorials: data.docs,
+        tutorials: tempTutorials,
         totalPages: data.totalPages,
         currentPage: data.page - 1,
       });
