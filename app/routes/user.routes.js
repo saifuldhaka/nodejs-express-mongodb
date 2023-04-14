@@ -16,6 +16,10 @@ module.exports = function(app) {
 
   app.post("/api/user/change-password", [authJwt.verifyToken], userController.changePassword);
 
+  app.post("/api/user/create-profile", [authJwt.verifyToken], userController.createProfile);
+
+  
+  
   app.get(
     "/api/user/mod",
     [authJwt.verifyToken, authJwt.isModerator],

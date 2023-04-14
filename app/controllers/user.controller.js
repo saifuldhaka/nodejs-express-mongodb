@@ -1,8 +1,10 @@
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
+
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const Profile = db.profiles;
 
 
 const loginUserId = '';
@@ -89,4 +91,64 @@ exports.changePassword = (req, res) => {
       });
     });
 
+}
+
+exports.createProfile = (req, res) => {
+
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+
+  if (!req.body.first_name) {
+    res.status(400).send({ message: "First name can not be empty!" });
+    return;
+  }
+
+  if (!req.body.address_line1) {
+    res.status(400).send({ message: "Address line 1 can not be empty!" });
+    return;
+  }
+
+  if (!req.body.state) {
+    res.status(400).send({ message: "State line 1 can not be empty!" });
+    return;
+  }
+
+  if (!req.body.country) {
+    res.status(400).send({ message: "Country line 1 can not be empty!" });
+    return;
+  }
+
+  
+  console.log(this.loginUserId);
+  console.log(req.body.first_name);
+  console.log(req.body.last_name);
+  console.log(req.body.address_line1);
+  console.log(req.body.address_line2);
+  console.log(req.body.city);
+  console.log(req.body.state);
+  console.log(req.body.country);
+
+  const profile = new Profile({
+    user_id: this.loginUserId,
+    first_name: req.body.first_name,
+    last_name: req.body.last_nam,
+    address_line1: req.body.address_line1,
+    address_line2: req.body.address_line2,        
+    city: req.body.city,
+    state: req.body.state,
+    country: req.body.country
+  });
+
+  // Save Profile
+  profile
+    .save(profile)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial.",
+      });
+    });
 }
