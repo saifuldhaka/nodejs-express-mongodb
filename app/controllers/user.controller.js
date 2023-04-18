@@ -8,6 +8,7 @@ const Profile = db.profiles;
 
 
 const loginUserId = '';
+const userProfile = {};
   
 const findUserId = (req, res, next) => {
   let token = req;  
@@ -118,16 +119,6 @@ exports.createProfile = (req, res) => {
     return;
   }
 
-  
-  console.log(this.loginUserId);
-  console.log(req.body.first_name);
-  console.log(req.body.last_name);
-  console.log(req.body.address_line1);
-  console.log(req.body.address_line2);
-  console.log(req.body.city);
-  console.log(req.body.state);
-  console.log(req.body.country);
-
   const profile = new Profile({
     user_id: this.loginUserId,
     first_name: req.body.first_name,
@@ -151,4 +142,82 @@ exports.createProfile = (req, res) => {
           err.message || "Some error occurred while creating the Tutorial.",
       });
     });
+}
+
+exports.changeProfile = (req, res) => {
+
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+
+  if (!req.body.first_name) {
+    res.status(400).send({ message: "First name can not be empty!" });
+    return;
+  }
+
+  if (!req.body.address_line1) {
+    res.status(400).send({ message: "Address line 1 can not be empty!" });
+    return;
+  }
+
+  if (!req.body.state) {
+    res.status(400).send({ message: "State line 1 can not be empty!" });
+    return;
+  }
+
+  if (!req.body.country) {
+    res.status(400).send({ message: "Country line 1 can not be empty!" });
+    return;
+  }
+
+  const id = req.params.id;
+
+}
+
+exports.viewProfile = (req, res) => {
+
+  const id = req.params.id;
+  
+  User.findById(id)
+    .then((data) => {
+      if(!data) res.status(404).send({ message: "User record not found." });
+      else {
+        var temp = {};
+        temp.username = data.username
+        temp.email = data.email
+
+        Profile.findOne({
+          user_id: id
+        }) 
+        .exec((err, profile) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          if (profile) {
+            temp.first_name = profile.first_name
+            temp.address_line1 = profile.address_line1
+            temp.address_line2 = profile.address_line2
+            temp.city = profile.city
+            temp.state = profile.state
+            temp.country = profile.country          
+          }
+
+          if (!profile) {
+            temp.first_name = "";
+            temp.address_line1 = "";
+            temp.address_line2 = "";
+            temp.city = "";
+            temp.state = "";
+            temp.country = "";
+          }
+          res.send(temp);
+        });        
+      } 
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({message: "Error retrieving User with id = " + id});
+    });
+
 }

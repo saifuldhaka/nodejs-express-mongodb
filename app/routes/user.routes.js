@@ -16,7 +16,9 @@ module.exports = function(app) {
 
   app.post("/api/user/change-password", [authJwt.verifyToken], userController.changePassword);
 
+  app.get("/api/user/view-profile/:id", [authJwt.verifyToken], userController.viewProfile);
   app.post("/api/user/create-profile", [authJwt.verifyToken], userController.createProfile);
+  app.post("/api/user/update-profile/:id", [authJwt.verifyToken], userController.changeProfile);
 
   
   
