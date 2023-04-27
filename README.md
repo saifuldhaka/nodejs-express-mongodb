@@ -27,7 +27,7 @@ Registered user
 
 Author user
 -----------------
-=> create profile &#1000;<br />
+=> create profile &#10003; <br />
 => view profile details &#10003;<br />
 => update profile<br />
 => change password &#10003;<br />
