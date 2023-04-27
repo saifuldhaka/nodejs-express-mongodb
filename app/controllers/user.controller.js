@@ -134,7 +134,17 @@ exports.createProfile = (req, res) => {
   profile
     .save(profile)
     .then((data) => {
-      res.send(data);
+      // res.send(data);
+      res.status(200).send({
+        id: data._id,
+        user_id: data.user_id,
+        first_name: data.first_name,
+        address_line1: data.address_line1,
+        address_line2: data.address_line2,
+        city: data.city,
+        state: data.state,
+        country: data.country
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -144,7 +154,7 @@ exports.createProfile = (req, res) => {
     });
 }
 
-exports.changeProfile = (req, res) => {
+exports.updateProfile = (req, res) => {
 
   let token = req.headers["x-access-token"];
   findUserId(token);
@@ -171,6 +181,33 @@ exports.changeProfile = (req, res) => {
 
   const id = req.params.id;
 
+  var data = {
+    'first_name': req.body.first_name,
+    'last_name': req.body.last_name,
+    'address_line1': req.body.address_line1,
+    'address_line2': req.body.address_line2,
+    'city': req.body.city,
+    'state': req.body.state,
+    'country': req.body.country
+  };
+
+  Profile.findByIdAndUpdate(id, data, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `User record not found!`,
+        });
+      } else {
+        res.send({ message: "Profile was updated successfully." });
+      } 
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Profile",
+      });
+    });
+
+
 }
 
 exports.viewProfile = (req, res) => {
@@ -194,23 +231,24 @@ exports.viewProfile = (req, res) => {
             return;
           }
           if (profile) {
-            temp.first_name = profile.first_name
+            temp.profile_id = profile._id,
+            temp.user_id = profile.user_id,
+            temp.first_name = profile.first_name,
+            temp.last_name = profile.last_name,
             temp.address_line1 = profile.address_line1
             temp.address_line2 = profile.address_line2
             temp.city = profile.city
             temp.state = profile.state
-            temp.country = profile.country          
+            temp.country = profile.country     
+            
+            res.status(500).send(temp);
+            return;
           }
 
           if (!profile) {
-            temp.first_name = "";
-            temp.address_line1 = "";
-            temp.address_line2 = "";
-            temp.city = "";
-            temp.state = "";
-            temp.country = "";
+            res.status(500).send({ message: "Profile not found." });
+            return;
           }
-          res.send(temp);
         });        
       } 
     })

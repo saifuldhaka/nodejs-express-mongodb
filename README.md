@@ -18,7 +18,7 @@ Registered user
 -----------------
 => create profile &#10003; <br />
 => view profile details &#10003;<br />
-=> update profile<br />
+=> update profile &#10003;<br />
 => change password &#10003;<br />
 => can see the tutorial list and search &#10003;<br />
 => can read first 150 words if not purchase &#10003;<br />
@@ -29,7 +29,7 @@ Author user
 -----------------
 => create profile &#10003; <br />
 => view profile details &#10003;<br />
-=> update profile<br />
+=> update profile &#10003;<br />
 => change password &#10003;<br />
 => can see the tutorial list and search &#10003;<br />
 => can read first 150 words if not purchase &#10003;<br />
@@ -43,7 +43,7 @@ Moderator user
 -----------------
 => create profile &#10003;<br />
 => view profile details &#10003;<br />
-=> update profile<br />
+=> update profile &#10003;<br />
 => change password &#10003;<br />
 => can see the tutorial list and search &#10003;<br />
 => can read the full tutorial <br />
@@ -54,7 +54,7 @@ Admin user
 -----------------
 => create profile &#10003;<br />
 => view profile details &#10003;<br />
-=> update profile<br />
+=> update profile &#10003;<br />
 => change password &#10003;<br />
 => Moderator list (add , edit, delete )<br />
 => Author list<br />
