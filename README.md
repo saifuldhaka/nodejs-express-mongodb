@@ -1,7 +1,7 @@
 # nodejs-express-mongodb Project outline / goal
 User Roles
 ------------
-=> admin
+=> admin\n
 => moderator
 => author
 => registered user
