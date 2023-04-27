@@ -1,11 +1,11 @@
 # nodejs-express-mongodb Project outline / goal
 User Roles
 ------------
-=> admin\n
-=> moderator
-=> author
-=> registered user
-=> guest user (not registered )
+=> admin<br />
+=> moderator<br />
+=> author<br />
+=> registered user<br />
+=> guest user (not registered )<br />
 
 Guest user
 -----------------
