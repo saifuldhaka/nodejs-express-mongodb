@@ -70,14 +70,14 @@ Admin user
 => create config folder inside app folder<br />
 => configure db.config.js as app>config>db.config.js<br />
 => configure DB as <br />
-> module.exports = {<br />
->    url: "your mongo DB link "<br />
->}<br />
+module.exports = {<br />
+    url: "your mongo DB link "<br />
+}<br />
 <br />
-> example <br />
-> module.exports = {<br />
->    url: "mongodb+srv://xxxxxxx:xxxxxxxx@cluster0.dvi0ncx.mongodb.net/databaseName"<br />
->} <br />
+example <br />
+module.exports = {<br />
+    url: "mongodb+srv://xxxxxxx:xxxxxxxx@cluster0.dvi0ncx.mongodb.net/databaseName"<br />
+} <br />
 
 
 ## Project setup
