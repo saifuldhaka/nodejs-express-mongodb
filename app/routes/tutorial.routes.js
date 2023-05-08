@@ -28,7 +28,10 @@ module.exports = app => {
 
     /* USER ROLE  */ 
     router.get("/tutorials", tutorials.findAllPublished);  
-    
+    router.get("/purchased-tutorials", [authJwt.verifyToken], tutorials.getMyPurchasedTutorials);
+    router.post("/purchased-tutorials", [authJwt.verifyToken], tutorials.createMyPurchasedTutorials);
+
+
     
     /* AUTHOR ROLE */
     // Create a new Tutorial
@@ -51,6 +54,8 @@ module.exports = app => {
 
     // Retrieve all published Tutorials and has admin access
     // router.get("/published", [authJwt.verifyToken, authJwt.isAdmin ], tutorials.findAllPublished);
+
+
 
     // Retrieve a single Tutorial with id and can see after login
     router.get("/:id", [authJwt.verifyToken], tutorials.findOne)

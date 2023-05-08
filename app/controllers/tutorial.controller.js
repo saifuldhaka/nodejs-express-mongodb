@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models");
+
+// const Tutorial = db.tutorials;
 const Tutorial = db.tutorials;
+const PurchasedTutorial = db.purchasedTutorials;
 
 const getPagination = (page, size) => {
   const limit = size ? +size : 30;
@@ -37,7 +40,7 @@ exports.create = (req, res) => {
     return;
   }
 
-   // Create a Tutorial
+  // Create a Tutorial
   const tutorial = new Tutorial({
     title: req.body.title,
     description: req.body.description,
@@ -83,10 +86,10 @@ exports.findAll = (req, res) => {
       var tutorials = data.docs;
       tutorials.forEach((tutorial) => {
         var temp = {
-          "author_id": tutorial.author_id,
-          "title": tutorial.title,
-          "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
-          "published": tutorial.published,
+          "user_id": tutorial.author_id,
+          // "title": tutorial.title,
+          // "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
+          // "published": tutorial.published,
           "createdAt": tutorial.createdAt,
           "updatedAt": tutorial.updatedAt,
           "id": tutorial.id
@@ -291,4 +294,102 @@ exports.findMyTutorials = (req, res) => {
           err.message || "Some error occurred while retrieving tutorials.",
       });
     });
+}
+
+exports.getMyPurchasedTutorials = (req, res) => {
+
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+
+  const { page, size, title } = req.query;
+
+  var conditions = { 
+    user_id: this.loginUserId,
+  };
+   
+
+  var options = {
+    sort: ({ createdAt: -1 })
+  };
+
+  const { limit, offset  } = getPagination(page, size);
+
+  PurchasedTutorial.paginate(conditions, { offset, limit , options })
+    .then((data) => {
+      const tempTutorials = [];
+      var tutorials = data.docs;
+      tutorials.forEach((tutorial) => {
+
+        var temp = {
+          "user_id": tutorial.user_id,
+          "tutorial_id": tutorial.tutorial_id,
+          // "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
+          // "published": tutorial.published,
+          // "createdAt": tutorial.createdAt,
+          // "updatedAt": tutorial.updatedAt,
+          // "id": tutorial.id
+        };
+
+        Tutorial.findById(tutorial.tutorial_id)
+          .then((data) => {
+            console.log(temp.tutorial_id);
+            temp.title = data.title;
+            tempTutorials.push(temp);
+          });
+
+          
+        tempTutorials.push(temp);
+      });
+
+      res.send({
+        totalItems: data.totalDocs,
+        tutorials: tempTutorials,
+        totalPages: data.totalPages,
+        currentPage: data.page - 1,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving tutorials.",
+      });
+    });
+
+}
+
+
+exports.createMyPurchasedTutorials = (req, res) => {
+
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+
+  // Validate request
+  if (!req.body.tutorial_id) {
+    res.status(400).send({ message: "Content can not be empty!" });
+    return;
+  }
+
+  // Create a Purchased Tutorial
+  const tutorial = new PurchasedTutorial({
+    tutorial_id: req.body.tutorial_id,
+    user_id: this.loginUserId
+  });
+
+  console.log( req.body.tutorial_id);
+
+  // Save Purchased Tutorial in the database
+  tutorial
+    .save(tutorial)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial.",
+      });
+    });
+
+
+
 }
