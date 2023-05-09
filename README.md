@@ -12,8 +12,6 @@ Guest user
 => can see published tutorial list and search &#10003; <br />
 => can read first 150 words &#10003; <br />
 => can do registration &#10003; <br />
-=> can purchase tutorials &#10003; <br />
-=> my purchase tutorial list &#10003; <br />
  
 
 Registered user
@@ -24,8 +22,8 @@ Registered user
 => change password &#10003;<br />
 => can see the tutorial list and search &#10003;<br />
 => can read first 150 words if not purchase &#10003;<br />
-=> can see his purchased tutorial list<br />
-=> can read the full tutorial<br />
+=> can see his purchased tutorial list &#10003;<br />
+=> can read the full tutorial (purchased tutorial only) &#10003;<br />
 
 Author user
 -----------------
