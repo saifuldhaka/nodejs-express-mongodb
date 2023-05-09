@@ -14,6 +14,7 @@ const getPagination = (page, size) => {
 };
 
 const loginUserId = '';
+const tutorialDetails = [];
 
 const findUserId = (req, res, next) => {
   let token = req;  
@@ -317,36 +318,36 @@ exports.getMyPurchasedTutorials = (req, res) => {
   PurchasedTutorial.paginate(conditions, { offset, limit , options })
     .then((data) => {
       const tempTutorials = [];
+      
+      // get my purchased tutorial
       var tutorials = data.docs;
+
+      const ids = []; // an array of ids to find
       tutorials.forEach((tutorial) => {
-
-        var temp = {
-          "user_id": tutorial.user_id,
-          "tutorial_id": tutorial.tutorial_id,
-          // "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
-          // "published": tutorial.published,
-          // "createdAt": tutorial.createdAt,
-          // "updatedAt": tutorial.updatedAt,
-          // "id": tutorial.id
-        };
-
-        Tutorial.findById(tutorial.tutorial_id)
-          .then((data) => {
-            console.log(temp.tutorial_id);
-            temp.title = data.title;
-            tempTutorials.push(temp);
-          });
-
-          
-        tempTutorials.push(temp);
+        ids.push(tutorial.tutorial_id);
       });
 
-      res.send({
-        totalItems: data.totalDocs,
-        tutorials: tempTutorials,
-        totalPages: data.totalPages,
-        currentPage: data.page - 1,
+      Tutorial.find({ _id: { $in: ids } }).populate('author_id').exec(function(err, tempTutorials) {
+        if (err) return handleError(err);
+        console.log('Tutorials with authors: ', tempTutorials);
+        res.send({
+          totalItems: data.totalDocs,
+          tutorials: tempTutorials,
+          totalPages: data.totalPages,
+          currentPage: data.page - 1
+        });
+
       });
+
+      // Tutorial.populate('author_id').find({ _id: { $in: ids } }, function(err, tempTutorials) {
+      //   if (err) return handleError(err);       
+      //   res.send({
+      //     totalItems: data.totalDocs,
+      //     tutorials: tempTutorials,
+      //     totalPages: data.totalPages,
+      //     currentPage: data.page - 1
+      //   });        
+      // });
     })
     .catch((err) => {
       res.status(500).send({

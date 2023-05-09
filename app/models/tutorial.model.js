@@ -1,7 +1,9 @@
 module.exports =( mongoose, mongoosePaginate) => {
     var schema = mongoose.Schema(
       {
-        author_id: String,
+        
+        author_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        // author_id: String,
         title: String,
         description: String,
         published: Boolean
@@ -20,3 +22,6 @@ module.exports =( mongoose, mongoosePaginate) => {
     const Tutorial = mongoose.model("tutorial", schema);
     return Tutorial;
   };
+
+
+  
