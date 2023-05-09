@@ -9,10 +9,12 @@ User Roles
 
 Guest user
 -----------------
-=> can see the tutorial list and search<br />
+=> can see published tutorial list and search &#10003; <br />
 => can read first 150 words<br />
 => can do registration <br />
-
+=> can purchase tutorials &#10003; <br />
+=> my purchase tutorial list &#10003; <br />
+ 
 
 Registered user
 -----------------
