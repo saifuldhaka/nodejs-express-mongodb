@@ -199,7 +199,6 @@ exports.findAllPublished = (req, res) => {
   const { page, size, title } = req.query;
 
   var conditions = { 
-    // author_id: this.loginUserId,
     published: true
   };
   if(title){
@@ -269,6 +268,10 @@ exports.findMyTutorials = (req, res) => {
     .then((data) => {
       const tempTutorials = [];
       var tutorials = data.docs;
+
+      // console.log(tutorials);
+
+
       tutorials.forEach((tutorial) => {
         var temp = {
           "author_id": tutorial.author_id,
@@ -329,7 +332,6 @@ exports.getMyPurchasedTutorials = (req, res) => {
 
       Tutorial.find({ _id: { $in: ids } }).populate('author_id').exec(function(err, tempTutorials) {
         if (err) return handleError(err);
-        console.log('Tutorials with authors: ', tempTutorials);
         res.send({
           totalItems: data.totalDocs,
           tutorials: tempTutorials,

@@ -1,6 +1,6 @@
 const { authJwt } = require("../middlewares");
 // const controller = require("../controllers/user.controller");
-const tutorials = require("../controllers/tutorial.controller");
+const tutorialController = require("../controllers/tutorial.controller");
 
 module.exports = app => {
 
@@ -27,17 +27,16 @@ module.exports = app => {
 
 
     /* USER ROLE  */ 
-    router.get("/tutorials", tutorials.findAllPublished);  
-    router.get("/purchased-tutorials", [authJwt.verifyToken], tutorials.getMyPurchasedTutorials);
-    router.post("/purchased-tutorials", [authJwt.verifyToken], tutorials.createMyPurchasedTutorials);
+    router.get("/tutorials", tutorialController.findAllPublished);  
+    router.get("/purchased-tutorials", [authJwt.verifyToken], tutorialController.getMyPurchasedTutorials);
+    router.post("/purchased-tutorials", [authJwt.verifyToken], tutorialController.createMyPurchasedTutorials);
 
 
     
     /* AUTHOR ROLE */
-    // Create a new Tutorial
-    router.post("/tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorials.create);
-    router.get("/my-tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorials.findMyTutorials);
-   
+    router.post("/tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.create);
+    router.get("/my-tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.findMyTutorials);
+    // router.put("/tutorials/:id", [authJwt.verifyToken, authJwt.isAuthor], tutorialController.updateTutorials);
     
 
     
@@ -58,18 +57,18 @@ module.exports = app => {
 
 
     // Retrieve a single Tutorial with id and can see after login
-    router.get("/:id", [authJwt.verifyToken], tutorials.findOne)
+    router.get("/:id", [authJwt.verifyToken], tutorialController.findOne)
 
     // authJwt.isAdmin , authJwt.isModerator
 
     // Update a Tutorial with id, admin and moderator can edit 
-    router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin , authJwt.isModerator], tutorials.update);
+    router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin , authJwt.isModerator], tutorialController.update);
 
     // Delete a Tutorial with id, only admin can delete 
-    router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorials.delete);
+    router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorialController.delete);
 
     // Delete all Tutorials, only admin can delete 
-    router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], tutorials.deleteAll);
+    router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], tutorialController.deleteAll);
 
     
 }
