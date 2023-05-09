@@ -36,7 +36,7 @@ Author user
 => can see his purchased tutorial list<br />
 => can read the full tutorial<br />
 => can see his own tutorial list<br />
-=> can write his own tutorial<br />
+=> can create his own tutorial &#10003;<br />
 => can update his own tutorial<br />
 
 Moderator user
