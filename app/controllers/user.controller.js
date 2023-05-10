@@ -130,11 +130,10 @@ exports.createProfile = (req, res) => {
     country: req.body.country
   });
 
-  // Save Profile
+  // Save Tutorial in the database
   profile
     .save(profile)
     .then((data) => {
-      // res.send(data);
       res.status(200).send({
         id: data._id,
         user_id: data.user_id,
@@ -212,46 +211,20 @@ exports.updateProfile = (req, res) => {
 
 exports.viewProfile = (req, res) => {
 
-  const id = req.params.id;
-  
-  User.findById(id)
-    .then((data) => {
-      if(!data) res.status(404).send({ message: "User record not found." });
-      else {
-        var temp = {};
-        temp.username = data.username
-        temp.email = data.email
+  const user_id = req.params.id;
 
-        Profile.findOne({
-          user_id: id
-        }) 
-        .exec((err, profile) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-          if (profile) {
-            temp.profile_id = profile._id,
-            temp.user_id = profile.user_id,
-            temp.first_name = profile.first_name,
-            temp.last_name = profile.last_name,
-            temp.address_line1 = profile.address_line1
-            temp.address_line2 = profile.address_line2
-            temp.city = profile.city
-            temp.state = profile.state
-            temp.country = profile.country     
-            
-            res.status(500).send(temp);
-            return;
-          }
-
-          if (!profile) {
-            res.status(500).send({ message: "Profile not found." });
-            return;
-          }
-        });        
-      } 
-    })
+  Promise.all([
+    User.findOne({ _id: user_id }, { username: 1, email: 1 }).exec(),
+    Profile.find({ user_id: user_id }).exec()
+  ]).then(function(results) {
+    const user = results[0];
+    delete user.password;
+    delete user.roles;
+    const profile = results[1];
+    const mergedResult = { user, profile };
+    res.status(500).send(mergedResult);
+      return;
+  })
     .catch((err) => {
       res
         .status(500)

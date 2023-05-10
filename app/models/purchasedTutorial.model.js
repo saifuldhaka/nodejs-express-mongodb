@@ -1,8 +1,10 @@
 module.exports =( mongoose, mongoosePaginate) => {
     var schema = mongoose.Schema(
       {
-        user_id: String,
-        tutorial_id: String
+        // user_id: String,        
+        // tutorial_id: String
+        user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        tutorial_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }
       },
       { timestamps: true }
     );
