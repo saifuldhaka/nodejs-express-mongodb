@@ -5,6 +5,8 @@ const db = require("../models");
 // const Tutorial = db.tutorials;
 const Tutorial = db.tutorial;
 const PurchasedTutorial = db.purchasedTutorial;
+const Profile = db.profile;
+const User = db.user;
 
 const getPagination = (page, size) => {
   const limit = size ? +size : 30;
@@ -301,7 +303,7 @@ exports.findMyTutorials = (req, res) => {
 }
 
 exports.getMyPurchasedTutorials = (req, res) => {
-
+  
   let token = req.headers["x-access-token"];
   findUserId(token);
 
@@ -331,6 +333,7 @@ exports.getMyPurchasedTutorials = (req, res) => {
       });
 
       Tutorial.find({ _id: { $in: ids } }).populate('author_id').exec(function(err, tempTutorials) {
+      // Tutorial.find({ _id: { $in: ids } }).exec(function(err, tempTutorials) {
         if (err) return handleError(err);
         res.send({
           totalItems: data.totalDocs,
@@ -338,18 +341,10 @@ exports.getMyPurchasedTutorials = (req, res) => {
           totalPages: data.totalPages,
           currentPage: data.page - 1
         });
-
       });
+      
+      
 
-      // Tutorial.populate('author_id').find({ _id: { $in: ids } }, function(err, tempTutorials) {
-      //   if (err) return handleError(err);       
-      //   res.send({
-      //     totalItems: data.totalDocs,
-      //     tutorials: tempTutorials,
-      //     totalPages: data.totalPages,
-      //     currentPage: data.page - 1
-      //   });        
-      // });
     })
     .catch((err) => {
       res.status(500).send({

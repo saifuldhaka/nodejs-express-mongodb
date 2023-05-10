@@ -211,11 +211,12 @@ exports.updateProfile = (req, res) => {
 
 exports.viewProfile = (req, res) => {
 
-  const user_id = req.params.id;
+  const userId = req.params.id;
 
   Promise.all([
-    User.findOne({ _id: user_id }, { username: 1, email: 1 }).exec(),
-    Profile.find({ user_id: user_id }).exec()
+    // User.findOne({ _id: userId }, { username: 1, email: 1 }).exec(),    // both are working
+    User.find({ _id: userId }, { username: 1, email: 1 }).exec(),
+    Profile.find({ user_id: userId }).exec()
   ]).then(function(results) {
     const user = results[0];
     delete user.password;
