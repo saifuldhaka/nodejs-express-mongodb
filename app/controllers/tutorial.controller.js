@@ -3,8 +3,8 @@ const config = require("../config/auth.config.js");
 const db = require("../models");
 
 // const Tutorial = db.tutorials;
-const Tutorial = db.tutorials;
-const PurchasedTutorial = db.purchasedTutorials;
+const Tutorial = db.tutorial;
+const PurchasedTutorial = db.purchasedTutorial;
 
 const getPagination = (page, size) => {
   const limit = size ? +size : 30;

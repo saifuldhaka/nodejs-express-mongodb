@@ -11,9 +11,9 @@ db.url = dbConfig.url;
 db.ROLES = ["user", "admin", "moderator","author"];
 db.user = require('./user.model');
 db.role = require('./role.model');
-db.tutorials = require("./tutorial.model.js")(mongoose, mongoosePaginate);
-db.profiles = require("./profile.model");
-db.purchasedTutorials = require("./purchasedTutorial.model.js")(mongoose, mongoosePaginate);
+db.tutorial = require("./tutorial.model.js")(mongoose, mongoosePaginate);
+db.profile = require("./profile.model");
+db.purchasedTutorial = require("./purchasedTutorial.model.js")(mongoose, mongoosePaginate);
 
 
 

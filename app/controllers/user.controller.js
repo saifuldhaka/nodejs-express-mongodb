@@ -4,7 +4,7 @@ var bcrypt = require("bcryptjs");
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
-const Profile = db.profiles;
+const Profile = db.profile;
 
 
 const loginUserId = '';
