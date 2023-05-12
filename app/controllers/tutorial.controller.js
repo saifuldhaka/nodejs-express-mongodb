@@ -302,57 +302,76 @@ exports.findMyTutorials = (req, res) => {
     });
 }
 
-exports.getMyPurchasedTutorials = (req, res) => {
-  
-  let token = req.headers["x-access-token"];
-  findUserId(token);
+exports.getMyPurchasedTutorials = async (req, res) => {
 
-  const { page, size, title } = req.query;
+  try {
 
-  var conditions = { 
-    user_id: this.loginUserId,
-  };
-   
+    let token = req.headers["x-access-token"];
+    findUserId(token);
 
-  var options = {
-    sort: ({ createdAt: -1 })
-  };
 
-  const { limit, offset  } = getPagination(page, size);
+    const page = parseInt(req.query.page) || 1; // get page number from query params, default to 1
+    const limit = parseInt(req.query.limit) || 10; // get limit number from query params, default to 10
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
 
-  PurchasedTutorial.paginate(conditions, { offset, limit , options })
-    .then((data) => {
-      const tempTutorials = [];
-      
-      // get my purchased tutorial
-      var tutorials = data.docs;
 
-      const ids = []; // an array of ids to find
-      tutorials.forEach((tutorial) => {
-        ids.push(tutorial.tutorial_id);
-      });
+    const purchasedTutorials = await PurchasedTutorial.find({user_id: this.loginUserId})
+                                    .skip(startIndex)
+                                    .limit(limit);
 
-      Tutorial.find({ _id: { $in: ids } }).populate('author_id').exec(function(err, tempTutorials) {
-      // Tutorial.find({ _id: { $in: ids } }).exec(function(err, tempTutorials) {
-        if (err) return handleError(err);
-        res.send({
-          totalItems: data.totalDocs,
-          tutorials: tempTutorials,
-          totalPages: data.totalPages,
-          currentPage: data.page - 1
-        });
-      });
-      
-      
+    const tutorials = await Tutorial.find();
+    const profiles = await Profile.find();
 
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials.",
-      });
+    const tutorialCount = await PurchasedTutorial.countDocuments({user_id: this.loginUserId});
+
+    const results = purchasedTutorials.map(purchasedTutorial => {
+      const tutorial = tutorials.find(tutorial => tutorial._id.toString() === purchasedTutorial.tutorial_id.toString());
+      const author = profiles.find(profile => profile.user_id.toString() === purchasedTutorial.author_id.toString());
+
+      return {
+        tutorial,
+        author
+      };
     });
 
+
+    var totalPage = Math.ceil(tutorialCount / limit) 
+    currentPage = page;
+
+    var previousPage = 1;
+    var nextPage = 1;
+    if(totalPage == 1){
+      previousPage = 1;
+      nextPage = 1;
+    }else
+    if(currentPage == totalPage){
+      previousPage = currentPage - 1;
+      nextPage = currentPage;
+    }else if( currentPage == 1 && totalPage > 1 ){
+      previousPage = currentPage;
+      nextPage = currentPage + 1;
+    }else{
+      previousPage = currentPage - 1;
+      nextPage = currentPage + 1;
+    }
+
+
+    res.json({
+      purchased_tutorial: results,
+      previousPage: previousPage,
+      nextPage: nextPage,
+      totalPage: totalPage,
+      currentPage : currentPage,
+      totalTutorial :tutorialCount
+    });
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: 'Internal server error'
+    });
+  }
 }
 
 
@@ -370,12 +389,11 @@ exports.createMyPurchasedTutorials = (req, res) => {
   // Create a Purchased Tutorial
   const tutorial = new PurchasedTutorial({
     tutorial_id: req.body.tutorial_id,
+    author_id: req.body.author_id,
     user_id: this.loginUserId
   });
 
-  console.log( req.body.tutorial_id);
-
-  // Save Purchased Tutorial in the database
+   // Save Purchased Tutorial in the database
   tutorial
     .save(tutorial)
     .then((data) => {

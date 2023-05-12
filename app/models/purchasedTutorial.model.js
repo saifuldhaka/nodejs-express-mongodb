@@ -4,7 +4,8 @@ module.exports =( mongoose, mongoosePaginate) => {
         // user_id: String,        
         // tutorial_id: String
         user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        tutorial_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }
+        tutorial_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' },
+        author_id: String
       },
       { timestamps: true }
     );
