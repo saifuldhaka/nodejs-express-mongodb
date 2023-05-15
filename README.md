@@ -39,7 +39,7 @@ Author user
 => can create his own tutorial &#10003;<br />
 => can update his own tutorial &#10003;<br />
 => count tutorial how many copies are sold &#10003;<br />
-=> list of users who have purchased his tutorials<br />
+=> list of users who have purchased my tutorials<br />
 
 
 

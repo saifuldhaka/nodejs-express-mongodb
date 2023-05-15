@@ -526,8 +526,25 @@ exports.countMySoldTutorials = (req, res) => {
 }
 
 
+exports.myCustomers = (req, res) => {
+
+  let token = req.headers["x-access-token"];
+  findUserId(token);
 
 
+  const myCustomers =  PurchasedTutorial.find({ author_id: this.loginUserId }).exec();
+
+  res.json(myCustomers);
+
+  res.status(200).json({
+    myCustomers
+  });
+  
+}
+
+
+
+//  -------------- ADMIN -----------------  //
 exports.countTutorialSold = (req, res) => {
 
     PurchasedTutorial.aggregate([

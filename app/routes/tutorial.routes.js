@@ -37,8 +37,8 @@ module.exports = app => {
     router.post("/tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.create);
     router.get("/my-tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.findMyTutorials);
     router.put("/tutorials/:id", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.updateTutorials);
-    router.get("/count-my-sold-tutorials", [authJwt.verifyToken, authJwt.isAuthor], tutorialController.countMySoldTutorials)
-    
+    router.get("/count-my-sold-tutorials", [authJwt.verifyToken, authJwt.isAuthor], tutorialController.countMySoldTutorials);
+    router.get("/my-customers", [authJwt.verifyToken, authJwt.isAuthor], tutorialController.myCustomers);
 
     
 
