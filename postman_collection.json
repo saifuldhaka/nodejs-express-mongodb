@@ -1,0 +1,892 @@
+{
+	"info": {
+		"_postman_id": "807ad537-0b58-41e8-94c2-7a61cdebe105",
+		"name": "NodeExpress",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Guest",
+			"item": [
+				{
+					"name": "Get tutorials",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorials?page=0&size=10&title=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorials"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"user\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tutorials",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorials?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorials"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchase a tutorials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWU4MzkyYTVkMDcxMTQ2NDM5YSIsImlhdCI6MTY4Mzc5MDk0OCwiZXhwIjoxNjgzODc3MzQ4fQ.RG_BzU5YiuwMbrFyqVyMN150s_6NlkfPS2_SonYB7iI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tutorial_id\": \"645b14f2464e3ef8812b4be1\",\r\n    \"author_id\": \"6434d2f2b5b07b04d25e0533\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/purchased-tutorials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"purchased-tutorials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Purchased tutorials",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0MmIyYmY0ZDc2ZTE4ZTQ3ODBjZiIsImlhdCI6MTY4Mzg4MTQyNywiZXhwIjoxNjgzOTY3ODI3fQ.1mDaTLP7Em7GmLGiUg5rcUlaJr59jAuONDcXb_nKODg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/purchased-tutorials?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"purchased-tutorials"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"author2\",\r\n    \"email\": \"author2@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"author\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"author2\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add tutorial",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWRjMzkyYTVkMDcxMTQ2NDM5NCIsImlhdCI6MTY4NDEyNjIzNSwiZXhwIjoxNjg0MjEyNjM1fQ.08zKo43QkZotIXazYaJQRVR_XerPrj_VVBfd7WIXk6c",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Generated Lorem Ipsum 13 A-0\",\r\n    \"published\": true,\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod. <br />Sagittis eu volutpat odio facilisis mauris sit amet massa. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Feugiat sed lectus vestibulum mattis ullamcorper velit. Praesent elementum facilisis leo vel. Mattis molestie a iaculis at erat pellentesque. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Condimentum lacinia quis vel eros donec. Consectetur purus ut faucibus pulvinar elementum. Lorem ipsum dolor sit amet consectetur adipiscing. Imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis nunc eget lorem dolor sed. Enim ut sem viverra aliquet eget sit amet tellus cras. Amet mattis vulputate enim nulla aliquet porttitor lacus. Lacus sed turpis tincidunt id aliquet risus feugiat. Morbi quis commodo odio aenean sed adipiscing diam. Sed velit dignissim sodales ut eu. Neque vitae tempus quam pellentesque nec.<br />Viverra orci sagittis eu volutpat. Amet dictum sit amet justo donec enim diam vulputate. In arcu cursus euismod quis viverra nibh cras. Diam ut venenatis tellus in metus vulputate eu scelerisque felis. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Congue quisque egestas diam in arcu. Ullamcorper malesuada proin libero nunc consequat. Neque ornare aenean euismod elementum nisi. Pellentesque habitant morbi tristique senectus et netus et. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my tutorials",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4MzYyNDg0OSwiZXhwIjoxNjgzNzExMjQ5fQ.8mD5S1FntZFlCb2ZhthnJ-s5QR1WakJlAFtBEgGU2ZA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/my-tutorials?page=0&size=5&title=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"my-tutorials"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "title",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update tutorial",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWRjMzkyYTVkMDcxMTQ2NDM5NCIsImlhdCI6MTY4NDEyNjIzNSwiZXhwIjoxNjg0MjEyNjM1fQ.08zKo43QkZotIXazYaJQRVR_XerPrj_VVBfd7WIXk6c",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Generated Lorem Ipsum 13 A-0\",\r\n    \"published\": true,\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod. <br />Sagittis eu volutpat odio facilisis mauris sit amet massa. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Feugiat sed lectus vestibulum mattis ullamcorper velit. Praesent elementum facilisis leo vel. Mattis molestie a iaculis at erat pellentesque. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Condimentum lacinia quis vel eros donec. Consectetur purus ut faucibus pulvinar elementum. Lorem ipsum dolor sit amet consectetur adipiscing. Imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis nunc eget lorem dolor sed. Enim ut sem viverra aliquet eget sit amet tellus cras. Amet mattis vulputate enim nulla aliquet porttitor lacus. Lacus sed turpis tincidunt id aliquet risus feugiat. Morbi quis commodo odio aenean sed adipiscing diam. Sed velit dignissim sodales ut eu. Neque vitae tempus quam pellentesque nec.<br />Viverra orci sagittis eu volutpat. Amet dictum sit amet justo donec enim diam vulputate. In arcu cursus euismod quis viverra nibh cras. Diam ut venenatis tellus in metus vulputate eu scelerisque felis. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Congue quisque egestas diam in arcu. Ullamcorper malesuada proin libero nunc consequat. Neque ornare aenean euismod elementum nisi. Pellentesque habitant morbi tristique senectus et netus et. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorials/6461c01eda59d0fc993850b0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorials",
+								"6461c01eda59d0fc993850b0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get count my tutorials sold",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWRjMzkyYTVkMDcxMTQ2NDM5NCIsImlhdCI6MTY4NDEyNjIzNSwiZXhwIjoxNjg0MjEyNjM1fQ.08zKo43QkZotIXazYaJQRVR_XerPrj_VVBfd7WIXk6c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/count-tutorial-sold",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"count-tutorial-sold"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modetaror",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"moderator\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"moderator\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tutorials",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorials"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"admin\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tutorials",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4MTE4MzQ5NSwiZXhwIjoxNjgxMjY5ODk1fQ.jU_n4iuNn3eK8FTPc1oNpG12TQLZK82Oq7sU_uMWZj8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/my-tutorials?title=express",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"my-tutorials"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "express"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tutorial Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjQ2ODk5NTFkMjFkZTVmNGY4MTM1NyIsImlhdCI6MTY3Njk2MTk1NSwiZXhwIjoxNjc3MDQ4MzU1fQ.srukoso2WqjSp2qiN-aE_jnnjQe6y0SIsXs7ksy0l9Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/63d8d1e1db2021614ac96c68",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"63d8d1e1db2021614ac96c68"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add tutorial",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Node Express Test 2\",\r\n    \"description\" : \"Test Description 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public Content No need login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/user/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tutorial list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/tutorials/tutorials?page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tutorials",
+						"tutorials"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjMzOGEzY2Y3MWViNmJiZDdiY2ZkMiIsImlhdCI6MTY3Njg4NDUwOCwiZXhwIjoxNjc2OTcwOTA4fQ.T1cg_kBOWvRCTP1Qp6PX5lyPoIh8jMRxoFkDo9FXaHo",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Saiful4\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/user/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4MTQ1OTM2OSwiZXhwIjoxNjgxNTQ1NzY5fQ.bItoeMBd5CYEX1UJv4cYG9ECWr2mat2Xz8ukJRHBt4E",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"123456\",\r\n    \"re_password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/user/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWU4MzkyYTVkMDcxMTQ2NDM5YSIsImlhdCI6MTY4MzcwMDI5MSwiZXhwIjoxNjgzNzg2NjkxfQ.qsVnap8hDPILxFC5kfe3KU5oS9a6sAFukzHI2N3SRRQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"A1 Saiful\",\r\n    \"last_name\": \"Isalam\",\r\n    \"address_line1\": \"Subang Jaya\",\r\n    \"address_line2\": \"Subang Business Avenue\",\r\n    \"city\": \"Subang Jaya\",\r\n    \"state\": \"Selangor\",\r\n    \"country\": \"Malaysia\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/user/create-profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"create-profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Profile Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWU4MzkyYTVkMDcxMTQ2NDM5YSIsImlhdCI6MTY4MzcwMDI5MSwiZXhwIjoxNjgzNzg2NjkxfQ.qsVnap8hDPILxFC5kfe3KU5oS9a6sAFukzHI2N3SRRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/user/view-profile/6434d2f2b5b07b04d25e0533",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"view-profile",
+						"6434d2f2b5b07b04d25e0533"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWU4MzkyYTVkMDcxMTQ2NDM5YSIsImlhdCI6MTY4MzcwMDI5MSwiZXhwIjoxNjgzNzg2NjkxfQ.qsVnap8hDPILxFC5kfe3KU5oS9a6sAFukzHI2N3SRRQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"U Saiful\",\r\n    \"last_name\": \"Islam\",\r\n    \"address_line1\": \"Subang Jaya\",\r\n    \"address_line2\": \"Subang Business Avenue\",\r\n    \"city\": \"Subang Jaya\",\r\n    \"state\": \"Selangor\",\r\n    \"country\": \"Malaysia\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/user/update-profile/645b19a53ef2acdb2895e8ee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"update-profile",
+						"645b19a53ef2acdb2895e8ee"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

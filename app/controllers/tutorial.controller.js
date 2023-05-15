@@ -422,7 +422,7 @@ exports.createMyPurchasedTutorials = (req, res) => {
 }
 
 
-//
+// Update Tutorial By Author
 exports.updateTutorials = async (req, res) => {
 
   let token = req.headers["x-access-token"];
@@ -470,7 +470,57 @@ exports.updateTutorials = async (req, res) => {
       message: "Error updating Tutorial with id=" + id,
     });
   });
+  
+}
 
+// countTutorialSold
+exports.countTutorialSold = (req, res) => {
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+
+
+  PurchasedTutorial.aggregate([
+    {
+      $match: {
+        author_id: this.loginUserId
+      }
+    },
+    {
+      $group: {
+        _id: '$tutorial_id',
+        sold_units: { $sum: 1 }
+      }
+    }
+  ])
+    .then(results => {
+      // Fetch the tutorial details for each sold tutorial
+      const tutorialPromises = results.map(result => {
+        return Tutorial.findById(result._id)
+          .then(tutorial => {
+            return {
+              // tutorial: {},
+              title: tutorial.title, 
+              tutorial_id: tutorial.id,
+              sold_units: result.sold_units
+            };
+          });
+      });
+  
+      // Resolve all tutorial promises
+      return Promise.all(tutorialPromises);
+    })
+
+    .then((resultsWithTutorialDetails) => {
+      res.send(resultsWithTutorialDetails);
+
+
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial.",
+      });
+    });
 
 
 }
