@@ -39,9 +39,16 @@ exports.create = (req, res) => {
     
   // Validate request
   if (!req.body.title) {
-    res.status(400).send({ message: "Content can not be empty!" });
+    res.status(400).send({ message: "Title Content can not be empty!" });
     return;
   }
+
+  if (!req.body.description) {
+    res.status(400).send({ message: "Description Content can not be empty!" });
+    return;
+  }
+
+
 
   // Create a Tutorial
   const tutorial = new Tutorial({
@@ -356,6 +363,11 @@ exports.getMyPurchasedTutorials = async (req, res) => {
       nextPage = currentPage + 1;
     }
 
+    if(totalPage == 0){
+      previousPage = 1;
+      nextPage = 1;
+    }
+
 
     res.json({
       purchased_tutorial: results,
@@ -373,7 +385,7 @@ exports.getMyPurchasedTutorials = async (req, res) => {
   }
 }
 
-
+// Purchase a tutorial 
 exports.createMyPurchasedTutorials = (req, res) => {
 
   let token = req.headers["x-access-token"];
@@ -404,6 +416,60 @@ exports.createMyPurchasedTutorials = (req, res) => {
           err.message || "Some error occurred while creating the Tutorial.",
       });
     });
+
+
+
+}
+
+
+//
+exports.updateTutorials = async (req, res) => {
+
+  let token = req.headers["x-access-token"];
+  findUserId(token);
+    
+  // Validate request
+  if (!req.body.title) {
+    res.status(400).send({ message: "Title Content can not be empty!" });
+    return;
+  }
+
+  if (!req.body.description) {
+    res.status(400).send({ message: "Description Content can not be empty!" });
+    return;
+  }
+
+  const id = req.params.id;
+  
+  // Tutorial Data
+  var data = {
+    title: req.body.title,
+    description: req.body.description,
+    published: req.body.published ? req.body.published : false,
+  };
+
+  var conditions = { 
+    id: id,
+    author_id: this.loginUserId
+  };
+
+  Tutorial.findOneAndUpdate(
+    conditions,
+    { $set: data },
+    { new: true }
+  )
+  .then((data) => {
+    if (!data) {
+      res.status(404).send({
+        message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`,
+      });
+    } else res.send({ message: "Tutorial was updated successfully." });
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: "Error updating Tutorial with id=" + id,
+    });
+  });
 
 
 

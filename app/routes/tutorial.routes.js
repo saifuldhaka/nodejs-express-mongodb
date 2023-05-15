@@ -36,7 +36,7 @@ module.exports = app => {
     /* AUTHOR ROLE */
     router.post("/tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.create);
     router.get("/my-tutorials", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.findMyTutorials);
-    // router.put("/tutorials/:id", [authJwt.verifyToken, authJwt.isAuthor], tutorialController.updateTutorials);
+    router.put("/tutorials/:id", [authJwt.verifyToken, authJwt.isAuthor ], tutorialController.updateTutorials);
     
 
     
@@ -62,7 +62,7 @@ module.exports = app => {
     // authJwt.isAdmin , authJwt.isModerator
 
     // Update a Tutorial with id, admin and moderator can edit 
-    router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin , authJwt.isModerator], tutorialController.update);
+    router.put("/:id", [authJwt.verifyToken, authJwt.isAuthor, authJwt.isModerator, authJwt.isAdmin ], tutorialController.update);
 
     // Delete a Tutorial with id, only admin can delete 
     router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorialController.delete);
