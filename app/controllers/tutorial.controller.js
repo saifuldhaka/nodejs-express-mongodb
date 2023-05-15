@@ -473,8 +473,8 @@ exports.updateTutorials = async (req, res) => {
   
 }
 
-// countTutorialSold
-exports.countTutorialSold = (req, res) => {
+// count My Sold Tutorial
+exports.countMySoldTutorials = (req, res) => {
   let token = req.headers["x-access-token"];
   findUserId(token);
 
@@ -523,4 +523,47 @@ exports.countTutorialSold = (req, res) => {
     });
 
 
+}
+
+
+
+
+exports.countTutorialSold = (req, res) => {
+
+    PurchasedTutorial.aggregate([
+      {
+        $match: {
+          author_id: 4
+        }
+      },
+      {
+        $group: {
+          _id: '$tutorial_id',
+          sold_units: { $sum: 1 }
+        }
+      }
+    ])
+    .then(results => {
+      // Fetch the tutorial details for each sold tutorial
+      const tutorialPromises = results.map(result => {
+        return Tutorial.findById(result._id)
+          .then(tutorial => {
+            return {
+              tutorial: tutorial,
+              sold_units: result.sold_units
+            };
+          });
+      });
+
+      // Resolve all tutorial promises
+      return Promise.all(tutorialPromises);
+    })
+    .then(resultsWithTutorialDetails => {
+      // Output the results with tutorial details
+      console.log(resultsWithTutorialDetails);
+    })
+    .catch(error => {
+      // Handle the error
+      console.log(error);
+    });
 }

@@ -38,7 +38,7 @@ Author user
 => can see his own tutorial list<br />
 => can create his own tutorial &#10003;<br />
 => can update his own tutorial &#10003;<br />
-=> count tutorial how many copies are sold <br />
+=> count tutorial how many copies are sold &#10003;<br />
 => list of users who have purchased his tutorials<br />
 
 
