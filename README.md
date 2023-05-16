@@ -39,7 +39,7 @@ Author user
 => can create his own tutorial &#10003;<br />
 => can update his own tutorial &#10003;<br />
 => count tutorial how many copies are sold &#10003;<br />
-=> list of users who have purchased my tutorials<br />
+=> list of users (my customers) who have purchased my tutorials &#10003;<br />
 
 
 
@@ -68,7 +68,7 @@ Admin user
 => can publish or un-publish the tutorial<br />
 => order list <br />
 
-
+** Follow the postman collection for testing
 
 # Configuration
 => create config folder inside app folder<br />

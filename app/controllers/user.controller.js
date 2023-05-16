@@ -122,7 +122,7 @@ exports.createProfile = (req, res) => {
   const profile = new Profile({
     user_id: this.loginUserId,
     first_name: req.body.first_name,
-    last_name: req.body.last_nam,
+    last_name: req.body.last_name,
     address_line1: req.body.address_line1,
     address_line2: req.body.address_line2,        
     city: req.body.city,
@@ -138,6 +138,7 @@ exports.createProfile = (req, res) => {
         id: data._id,
         user_id: data.user_id,
         first_name: data.first_name,
+        last_name: data.last_name,
         address_line1: data.address_line1,
         address_line2: data.address_line2,
         city: data.city,

@@ -512,8 +512,6 @@ exports.countMySoldTutorials = (req, res) => {
 
     .then((resultsWithTutorialDetails) => {
       res.send(resultsWithTutorialDetails);
-
-
     })
     .catch((err) => {
       res.status(500).send({
@@ -526,19 +524,64 @@ exports.countMySoldTutorials = (req, res) => {
 }
 
 
-exports.myCustomers = (req, res) => {
+exports.myCustomers = async (req, res) => {
 
   let token = req.headers["x-access-token"];
   findUserId(token);
+  var authorId = this.loginUserId;
+
+  // Count the total number of records matching the condition
+
+  const totalRecords = await PurchasedTutorial.aggregate([
+    { $match: { author_id: authorId } }, // Filter documents by author_id
+    { $group: { _id: "$user_id", count: { $sum: 1 } } }, // Group documents by user_id and count the occurrences
+  ]);
+  // totalRecords.length;
+
+  const currentPage = parseInt(req.query.page) || 1; // get page number from query params, default to 1
+  const pageSize = parseInt(req.query.limit) || 10; // get limit number from query params, default to 10
 
 
-  const myCustomers =  PurchasedTutorial.find({ author_id: this.loginUserId }).exec();
+  const userIDs = await PurchasedTutorial.aggregate([
+    { $match: { author_id: authorId } },
+    { $group: { _id: "$user_id" } },
+    { $project: { _id: 0, user_id: "$_id" } },
+    { $skip: (currentPage - 1) * pageSize }, // Apply pagination - skip records
+    { $limit: pageSize } // Apply pagination - limit records per page    
+  ]);
 
-  res.json(myCustomers);
+    
 
-  res.status(200).json({
-    myCustomers
+
+  var promises = userIDs.map((user) =>
+    Profile.find({ user_id: user.user_id.toString() })
+    .select('user_id first_name last_name address_line1 address_line2 city state country')
+    .exec()
+  );
+
+
+  const totalPages = Math.ceil(totalRecords.length / pageSize);
+  const previousPage = currentPage > 1 ? currentPage - 1 : null;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+
+  Promise.all(promises)
+  .then((customers) => {
+    // console.log(customers);
+    res.json({
+      total_record: totalRecords.length,
+      total_page: totalPages,
+      current_page: currentPage,
+      previous_page: previousPage,
+      next_page: nextPage,
+      page_size: pageSize,
+      customers : customers
+    });
+  })
+  .catch((error) => {
+    console.error("Error retrieving profiles:", error);
   });
+
+
   
 }
 

@@ -403,7 +403,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/tutorials/count-tutorial-sold",
+							"raw": "http://localhost:8080/api/tutorials/count-my-sold-tutorials",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -412,7 +412,44 @@
 							"path": [
 								"api",
 								"tutorials",
-								"count-tutorial-sold"
+								"count-my-sold-tutorials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDIzMDM4OCwiZXhwIjoxNjg0MzE2Nzg4fQ.7I-94a3zBLbkoFkzLGceY_UQANk9_J_-zTQjg2-xUG8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/my-customers?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"my-customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
 							]
 						}
 					},
