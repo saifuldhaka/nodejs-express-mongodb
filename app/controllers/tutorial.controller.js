@@ -39,12 +39,17 @@ exports.create = (req, res) => {
     
   // Validate request
   if (!req.body.title) {
-    res.status(400).send({ message: "Title Content can not be empty!" });
+    res.status(400).send({ message: "Title can not be empty!" });
+    return;
+  }
+
+  if (!req.body.abstract) {
+    res.status(400).send({ message: "Abstract can not be empty!" });
     return;
   }
 
   if (!req.body.description) {
-    res.status(400).send({ message: "Description Content can not be empty!" });
+    res.status(400).send({ message: "Description can not be empty!" });
     return;
   }
 
@@ -53,6 +58,7 @@ exports.create = (req, res) => {
   // Create a Tutorial
   const tutorial = new Tutorial({
     title: req.body.title,
+    abstract: req.body.abstract,
     description: req.body.description,
     author_id: this.loginUserId,
     published: req.body.published ? req.body.published : false,
@@ -97,7 +103,7 @@ exports.findAll = (req, res) => {
       tutorials.forEach((tutorial) => {
         var temp = {
           "user_id": tutorial.author_id,
-          // "title": tutorial.title,
+          "title": tutorial.title,
           // "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
           // "published": tutorial.published,
           "createdAt": tutorial.createdAt,
@@ -204,53 +210,59 @@ exports.deleteAll = (req, res) => {
 };
 
 // Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-  const { page, size, title } = req.query;
+exports.findAllPublished = async (req, res) => {
+
+
+  const { page, limit, title } = req.query;
+
+  const currentPage = parseInt(page) || 1; // get page number from query params, default to 1
+  const pageSize = parseInt(limit) || 10; // get limit number from query params, default to 10
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * currentPage;
 
   var conditions = { 
     published: true
   };
   if(title){
     conditions.title = { $regex: new RegExp(title), $options: "i" }
-  }    
+  }
+  
+  
 
-  var options = {
-    sort: ({ createdAt: -1 })
-  };
+  const tutorials = await Tutorial.find(conditions)
+                                  .sort({ updatedAt: 'desc' })
+                                  .skip(startIndex)
+                                  .limit(pageSize)
+                                  .select('author_id title abstract published createdAt updatedAt');
 
-  const { limit, offset  } = getPagination(page, size);
+  const totalTutorial = await Tutorial.countDocuments(conditions);
 
-  Tutorial.paginate(conditions, { offset, limit, options })
-    .then((data) => {
+  const profile = await Profile.find().select('user_id first_name last_name address_line1 address_line2 city state country'); 
+  
+  const results = tutorials.map(tutorial => {
+    const author = profile.find(profile => profile.user_id.toString() === tutorial.author_id.toString()); 
+  return {
+      author,
+      tutorial
+    };
+  });
 
-      const tempTutorials = [];
-      var tutorials = data.docs;
-      tutorials.forEach((tutorial) => {
-        var temp = {
-          "author_id": tutorial.author_id,
-          "title": tutorial.title,
-          "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
-          "published": tutorial.published,
-          "createdAt": tutorial.createdAt,
-          "updatedAt": tutorial.updatedAt,
-          "id": tutorial.id
-        };
-        tempTutorials.push(temp);
-      });
+ 
+  const totalPages = Math.ceil(totalTutorial / pageSize);
+  const previousPage = currentPage > 1 ? currentPage - 1 : null;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
-      res.send({
-        totalItems: data.totalDocs,
-        tutorials: tempTutorials,
-        totalPages: data.totalPages,
-        currentPage: data.page - 1,
-      });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials.",
-      });
-    });
+  res.json({
+    tutorials: results,
+    previous_page: previousPage,
+    next_page: nextPage,
+    total_pages: totalPages,
+    current_page : currentPage,
+    total_tutorial :totalTutorial
+  });
+
+  
+
 };
 
 // Find all My Tutorials
@@ -285,7 +297,9 @@ exports.findMyTutorials = (req, res) => {
         var temp = {
           "author_id": tutorial.author_id,
           "title": tutorial.title,
-          "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
+          "abstract": tutorial.abstract,
+          // "description": tutorial.description.split(/\s+/).slice(0, 10).join(" ") + " ....",
+          "description": tutorial.description,
           "published": tutorial.published,
           "createdAt": tutorial.createdAt,
           "updatedAt": tutorial.updatedAt,
@@ -317,15 +331,15 @@ exports.getMyPurchasedTutorials = async (req, res) => {
     findUserId(token);
 
 
-    const page = parseInt(req.query.page) || 1; // get page number from query params, default to 1
-    const limit = parseInt(req.query.limit) || 10; // get limit number from query params, default to 10
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
+    const currentPage = parseInt(req.query.page) || 1; // get page number from query params, default to 1
+    const pageSize = parseInt(req.query.limit) || 10; // get limit number from query params, default to 10
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = currentPage * currentPage;
 
 
     const purchasedTutorials = await PurchasedTutorial.find({user_id: this.loginUserId})
                                     .skip(startIndex)
-                                    .limit(limit);
+                                    .limit(pageSize);
 
     const tutorials = await Tutorial.find();
     const profiles = await Profile.find();
@@ -343,39 +357,17 @@ exports.getMyPurchasedTutorials = async (req, res) => {
     });
 
 
-    var totalPage = Math.ceil(tutorialCount / limit) 
-    currentPage = page;
-
-    var previousPage = 1;
-    var nextPage = 1;
-    if(totalPage == 1){
-      previousPage = 1;
-      nextPage = 1;
-    }else
-    if(currentPage == totalPage){
-      previousPage = currentPage - 1;
-      nextPage = currentPage;
-    }else if( currentPage == 1 && totalPage > 1 ){
-      previousPage = currentPage;
-      nextPage = currentPage + 1;
-    }else{
-      previousPage = currentPage - 1;
-      nextPage = currentPage + 1;
-    }
-
-    if(totalPage == 0){
-      previousPage = 1;
-      nextPage = 1;
-    }
-
+    const totalPages = Math.ceil(tutorialCount / pageSize);
+    const previousPage = currentPage > 1 ? currentPage - 1 : null;
+    const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
     res.json({
       purchased_tutorial: results,
-      previousPage: previousPage,
-      nextPage: nextPage,
-      totalPage: totalPage,
-      currentPage : currentPage,
-      totalTutorial :tutorialCount
+      previous_page: previousPage,
+      next_page: nextPage,
+      total_pages: totalPages,
+      current_page : currentPage,
+      total_tutorial :tutorialCount
     });
     
   } catch (err) {
@@ -444,6 +436,7 @@ exports.updateTutorials = async (req, res) => {
   // Tutorial Data
   var data = {
     title: req.body.title,
+    abstract: req.body.abstract,
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
   };
@@ -501,6 +494,7 @@ exports.countMySoldTutorials = (req, res) => {
               // tutorial: {},
               title: tutorial.title, 
               tutorial_id: tutorial.id,
+              abstract: tutorial.abstract,
               sold_units: result.sold_units
             };
           });

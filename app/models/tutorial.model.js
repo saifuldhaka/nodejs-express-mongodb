@@ -5,6 +5,7 @@ module.exports =( mongoose, mongoosePaginate) => {
         author_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         // author_id: String,
         title: String,
+        abstract: String,
         description: String,
         published: Boolean
       },
