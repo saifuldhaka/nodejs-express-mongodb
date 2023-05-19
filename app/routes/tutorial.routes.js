@@ -27,7 +27,8 @@ module.exports = app => {
 
 
     /* USER ROLE  */ 
-    router.get("/tutorials", tutorialController.findAllPublished);  
+    router.get("/tutorials", tutorialController.findAllPublished);
+    router.get("/tutorials/:id", tutorialController.findOne);
     router.get("/purchased-tutorials", [authJwt.verifyToken], tutorialController.getMyPurchasedTutorials);
     router.post("/purchased-tutorials", [authJwt.verifyToken], tutorialController.createMyPurchasedTutorials);
 

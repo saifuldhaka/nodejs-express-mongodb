@@ -31,6 +31,17 @@ const findUserId = (req, res, next) => {
   });
 };
 
+
+function verifyToken(token) {
+  try {
+    jwt.verify(token, config.secret);
+    return true;
+  } catch (error) {
+    return false;
+    
+  }
+}
+
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
   
@@ -80,6 +91,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
+
   const { page, size, title } = req.query;
 
   var conditions = { 
@@ -130,13 +142,30 @@ exports.findAll = (req, res) => {
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
+
+  const validToken = false;
+  let token = req.headers["x-access-token"];
+
+  const isValid = verifyToken(token);
+  
+  if(!isValid){
+    console.log('false');
+  }else{
+    console.log('true');
+  }
+  
+
   const id = req.params.id;
 
   Tutorial.findById(id)
+    .select("author_id title published createdAt updatedAt abstract id")
     .then((data) => {
       if (!data)
         res.status(404).send({ message: "Not found Tutorial with id " + id });
-      else res.send(data);
+      else res.send(
+        data
+        
+        );
     })
     .catch((err) => {
       res
@@ -258,7 +287,8 @@ exports.findAllPublished = async (req, res) => {
     next_page: nextPage,
     total_pages: totalPages,
     current_page : currentPage,
-    total_tutorial :totalTutorial
+    total_tutorial :totalTutorial,
+    page_limit: pageSize
   });
 
   
@@ -367,7 +397,8 @@ exports.getMyPurchasedTutorials = async (req, res) => {
       next_page: nextPage,
       total_pages: totalPages,
       current_page : currentPage,
-      total_tutorial :tutorialCount
+      total_tutorial :tutorialCount,
+      page_limit: pageSize
     });
     
   } catch (err) {
@@ -568,7 +599,8 @@ exports.myCustomers = async (req, res) => {
       previous_page: previousPage,
       next_page: nextPage,
       page_size: pageSize,
-      customers : customers
+      customers : customers,
+      page_limit: pageSize
     });
   })
   .catch((error) => {
