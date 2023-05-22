@@ -10,7 +10,6 @@ User Roles
 Guest user
 -----------------
 => can see published tutorial list and search &#10003; <br />
-=> can read first 150 words &#10003; <br />
 => can do registration &#10003; <br />
  
 
@@ -21,7 +20,6 @@ Registered user
 => update profile &#10003;<br />
 => change password &#10003;<br />
 => can see the tutorial list and search &#10003;<br />
-=> can read first 150 words if not purchase &#10003;<br />
 => can see his purchased tutorial list &#10003;<br />
 => can read the full tutorial (purchased tutorial only) &#10003;<br />
 
@@ -32,15 +30,13 @@ Author user
 => update profile &#10003;<br />
 => change password &#10003;<br />
 => can see the tutorial list and search &#10003;<br />
-=> can read first 150 words if not purchase &#10003;<br />
 => can see his purchased tutorial list<br />
-=> can read the full tutorial<br />
-=> can see his own tutorial list<br />
+=> can read the full tutorial &#10003; <br />
+=> can see his own tutorial list &#10003; <br />
 => can create his own tutorial &#10003;<br />
 => can update his own tutorial &#10003;<br />
 => count tutorial how many copies are sold &#10003;<br />
 => list of users (my customers) who have purchased my tutorials &#10003;<br />
-
 
 
 Moderator user

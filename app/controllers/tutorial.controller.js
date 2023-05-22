@@ -79,7 +79,7 @@ exports.create = (req, res) => {
   tutorial
     .save(tutorial)
     .then((data) => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch((err) => {
       res.status(500).send({
@@ -125,7 +125,7 @@ exports.findAll = (req, res) => {
         tempTutorials.push(temp);
       });
 
-      res.send({
+      res.status(200).send({
         totalItems: data.totalDocs,
         tutorials: tempTutorials,
         totalPages: data.totalPages,
@@ -141,37 +141,35 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Tutorial with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
 
   const validToken = false;
   let token = req.headers["x-access-token"];
 
   const isValid = verifyToken(token);
+
+  const id = req.params.id;
   
   if(!isValid){
     console.log('false');
+    const tutorial = await Tutorial.findById(id)
+          .select("author_id title published createdAt updatedAt abstract id");
+    res.status(200).send(tutorial);
+    
+
   }else{
-    console.log('true');
+    findUserId(token);
+    const isPurchase = await PurchasedTutorial.find({user_id:this.loginUserId, tutorial_id: id});
+     if(isPurchase){
+      const tutorial = await Tutorial.findById(id)
+          .select("author_id title published createdAt updatedAt abstract description id");
+      res.status(200).send(tutorial);
+     }else{
+      const tutorial = await Tutorial.findById(id)
+        .select("author_id title published createdAt updatedAt abstract id");
+      res.status(200).send(tutorial);
+     }
   }
-  
-
-  const id = req.params.id;
-
-  Tutorial.findById(id)
-    .select("author_id title published createdAt updatedAt abstract id")
-    .then((data) => {
-      if (!data)
-        res.status(404).send({ message: "Not found Tutorial with id " + id });
-      else res.send(
-        data
-        
-        );
-    })
-    .catch((err) => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving Tutorial with id=" + id });
-    });
 };
 
 // Update a Tutorial by the id in the request
@@ -190,7 +188,7 @@ exports.update = (req, res) => {
         res.status(404).send({
           message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`,
         });
-      } else res.send({ message: "Tutorial was updated successfully." });
+      } else res.status(200).send({ message: "Tutorial was updated successfully." });
     })
     .catch((err) => {
       res.status(500).send({
@@ -210,7 +208,7 @@ exports.delete = (req, res) => {
           message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`,
         });
       } else {
-        res.send({
+        res.status(200).send({
           message: "Tutorial was deleted successfully!",
         });
       }
@@ -226,7 +224,7 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   Tutorial.deleteMany({})
     .then((data) => {
-      res.send({
+      res.status(200).send({
         message: `${data.deletedCount} Tutorials were deleted successfully!`,
       });
     })
@@ -338,7 +336,7 @@ exports.findMyTutorials = (req, res) => {
         tempTutorials.push(temp);
       });
 
-      res.send({
+      res.status(200).send({
         totalItems: data.totalDocs,
         tutorials: tempTutorials,
         totalPages: data.totalPages,
@@ -431,7 +429,7 @@ exports.createMyPurchasedTutorials = (req, res) => {
   tutorial
     .save(tutorial)
     .then((data) => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch((err) => {
       res.status(500).send({
@@ -487,7 +485,7 @@ exports.updateTutorials = async (req, res) => {
       res.status(404).send({
         message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`,
       });
-    } else res.send({ message: "Tutorial was updated successfully." });
+    } else res.status(200).send({ message: "Tutorial was updated successfully." });
   })
   .catch((err) => {
     res.status(500).send({
@@ -536,7 +534,7 @@ exports.countMySoldTutorials = (req, res) => {
     })
 
     .then((resultsWithTutorialDetails) => {
-      res.send(resultsWithTutorialDetails);
+      res.status(200).send(resultsWithTutorialDetails);
     })
     .catch((err) => {
       res.status(500).send({
