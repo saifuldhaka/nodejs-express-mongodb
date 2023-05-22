@@ -47,7 +47,8 @@ module.exports = app => {
 
 
     /* MODERATOR ROLE */ 
-    
+    router.get("/unpublished-tutorials", [authJwt.verifyToken, authJwt.isModerator ], tutorialController.unPublishedTutorials);
+    router.put("/change-publish-status/:id", [authJwt.verifyToken, authJwt.isModerator ], tutorialController.changePublishStatus);
 
 
 

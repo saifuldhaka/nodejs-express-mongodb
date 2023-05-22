@@ -154,21 +154,39 @@ exports.findOne = async (req, res) => {
     console.log('false');
     const tutorial = await Tutorial.findById(id)
           .select("author_id title published createdAt updatedAt abstract id");
-    res.status(200).send(tutorial);
+
+    const profile = await Profile.find({user_id: tutorial.author_id}).select("first_name last_name address_line1 address_line2 city state country");      
+    
+    
+    const result = { tutorial, profile };
+
+    res.status(200).send(result);
     
 
   }else{
     findUserId(token);
     const isPurchase = await PurchasedTutorial.find({user_id:this.loginUserId, tutorial_id: id});
-     if(isPurchase){
-      const tutorial = await Tutorial.findById(id)
+      if(isPurchase){
+        const tutorial = await Tutorial.findById(id)
           .select("author_id title published createdAt updatedAt abstract description id");
-      res.status(200).send(tutorial);
-     }else{
-      const tutorial = await Tutorial.findById(id)
-        .select("author_id title published createdAt updatedAt abstract id");
-      res.status(200).send(tutorial);
-     }
+      
+        const profile = await Profile.find({user_id: tutorial.author_id}).select("first_name last_name address_line1 address_line2 city state country");      
+
+        const result = { tutorial, profile };
+
+        res.status(200).send(result);
+
+      }else{
+      
+        const tutorial = await Tutorial.findById(id)
+          .select("author_id title published createdAt updatedAt abstract id");
+      
+        const profile = await Profile.find({user_id: tutorial.author_id}).select("first_name last_name address_line1 address_line2 city state country");      
+
+        const result = { tutorial, profile };
+
+        res.status(200).send(result);
+      }
   }
 };
 
@@ -611,7 +629,87 @@ exports.myCustomers = async (req, res) => {
 
 
 
-//  -------------- ADMIN -----------------  //
+//  -------------- MODERATOR AND  ADMIN -----------------  //
+
+exports.unPublishedTutorials = async (req, res, next) => {
+
+  const { page, limit, title } = req.query;
+
+  const currentPage = parseInt(page) || 1; // get page number from query params, default to 1
+  const pageSize = parseInt(limit) || 10; // get limit number from query params, default to 10
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * currentPage;
+
+  var conditions = { 
+    published: false,
+    sort: ({ createdAt: -1 })
+  };
+
+  if(title){
+    conditions.title = { $regex: new RegExp(title), $options: "i" }
+  }
+  
+  const tutorials = await Tutorial.find(conditions)
+                                  .sort({ updatedAt: 'desc' })
+                                  .skip(startIndex)
+                                  .limit(pageSize)
+                                  .select('author_id title abstract published createdAt updatedAt description');
+
+  const totalTutorial = await Tutorial.countDocuments(conditions);
+
+  const profile = await Profile.find().select('user_id first_name last_name address_line1 address_line2 city state country'); 
+  
+  const results = tutorials.map(tutorial => {
+    const author = profile.find(profile => profile.user_id.toString() === tutorial.author_id.toString()); 
+  return {
+      author,
+      tutorial
+    };
+  });
+
+ 
+  const totalPages = Math.ceil(totalTutorial / pageSize);
+  const previousPage = currentPage > 1 ? currentPage - 1 : null;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+
+  res.json({
+    tutorials: results,
+    previous_page: previousPage,
+    next_page: nextPage,
+    total_pages: totalPages,
+    current_page : currentPage,
+    total_tutorial :totalTutorial,
+    page_limit: pageSize
+  });
+
+}
+
+exports.changePublishStatus = async (req, res, next) => {
+
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
+  }
+
+  const id = req.params.id;
+
+  Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`,
+        });
+      } else res.status(200).send({ message: "Tutorial publish status was updated successfully." });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Tutorial with id=" + id,
+      });
+    });
+
+}
+
 exports.countTutorialSold = (req, res) => {
 
     PurchasedTutorial.aggregate([

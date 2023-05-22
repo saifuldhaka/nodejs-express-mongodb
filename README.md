@@ -45,7 +45,8 @@ Moderator user
 => view profile details &#10003;<br />
 => update profile &#10003;<br />
 => change password &#10003;<br />
-=> can see the tutorial list and search &#10003;<br />
+=> can see published tutorial list and search &#10003;<br />
+=> can see unpublished tutorial list list and search &#10003;<br />
 => can read the full tutorial <br />
 => can publish or un-publish the tutorial<br />
 
