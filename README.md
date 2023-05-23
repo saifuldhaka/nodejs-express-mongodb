@@ -47,8 +47,8 @@ Moderator user
 => change password &#10003;<br />
 => can see published tutorial list and search &#10003;<br />
 => can see unpublished tutorial list list and search &#10003;<br />
-=> can read the full tutorial <br />
-=> can publish or un-publish the tutorial<br />
+=> can read the full tutorial to review &#10003;<br />
+=> can publish or un-publish the tutorial &#10003;<br />
 
 
 Admin user

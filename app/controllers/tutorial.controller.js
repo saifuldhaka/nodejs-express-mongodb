@@ -151,7 +151,6 @@ exports.findOne = async (req, res) => {
   const id = req.params.id;
   
   if(!isValid){
-    console.log('false');
     const tutorial = await Tutorial.findById(id)
           .select("author_id title published createdAt updatedAt abstract id");
 
@@ -256,8 +255,6 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Tutorials
 exports.findAllPublished = async (req, res) => {
-
-
   const { page, limit, title } = req.query;
 
   const currentPage = parseInt(page) || 1; // get page number from query params, default to 1
@@ -271,8 +268,6 @@ exports.findAllPublished = async (req, res) => {
   if(title){
     conditions.title = { $regex: new RegExp(title), $options: "i" }
   }
-  
-  
 
   const tutorials = await Tutorial.find(conditions)
                                   .sort({ updatedAt: 'desc' })
@@ -306,8 +301,6 @@ exports.findAllPublished = async (req, res) => {
     total_tutorial :totalTutorial,
     page_limit: pageSize
   });
-
-  
 
 };
 
@@ -485,7 +478,8 @@ exports.updateTutorials = async (req, res) => {
     title: req.body.title,
     abstract: req.body.abstract,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    published: false,
+    updatedAt: new Date()
   };
 
   var conditions = { 
@@ -560,8 +554,6 @@ exports.countMySoldTutorials = (req, res) => {
           err.message || "Some error occurred while creating the Tutorial.",
       });
     });
-
-
 }
 
 
@@ -684,6 +676,20 @@ exports.unPublishedTutorials = async (req, res, next) => {
 
 }
 
+exports.tutorialReview = async (req, res, next) => {
+
+    const id = req.params.id;
+    const tutorial = await Tutorial.findById(id)
+          .select("id author_id title abstract description published createdAt updatedAt ");
+ 
+    const profile = await Profile.find({user_id: tutorial.author_id}).select("first_name last_name address_line1 address_line2 city state country");      
+     
+    const result = { tutorial, profile };
+
+    res.status(200).send(result);
+  
+}
+
 exports.changePublishStatus = async (req, res, next) => {
 
   if (!req.body) {
@@ -694,20 +700,19 @@ exports.changePublishStatus = async (req, res, next) => {
 
   const id = req.params.id;
 
-  Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`,
-        });
-      } else res.status(200).send({ message: "Tutorial publish status was updated successfully." });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error updating Tutorial with id=" + id,
-      });
-    });
+  const filter = { _id: req.params.id };
+  const update = { $set: { published: req.body.published, updatedAt: new Date() } };
 
+  const result = await Tutorial.updateOne(filter, update);
+  console.log(result.modifiedCount);
+  if(result.modifiedCount > 0){
+    res.status(200)
+    .send({ message: "Tutorial publish status was updated successfully." });
+  }else{
+    res.status(500).send({
+      message: "Error updating Tutorial",
+    });
+  }
 }
 
 exports.countTutorialSold = (req, res) => {
