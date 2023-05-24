@@ -60,18 +60,18 @@ module.exports = app => {
 
 
     // Retrieve a single Tutorial with id and can see after login
-    router.get("/:id", [authJwt.verifyToken], tutorialController.findOne)
+    // router.get("/:id", [authJwt.verifyToken], tutorialController.findOne)
 
     // authJwt.isAdmin , authJwt.isModerator
 
     // Update a Tutorial with id, admin and moderator can edit 
-    router.put("/:id", [authJwt.verifyToken, authJwt.isAuthor, authJwt.isModerator, authJwt.isAdmin ], tutorialController.update);
+    // router.put("/:id", [authJwt.verifyToken, authJwt.isAuthor, authJwt.isModerator, authJwt.isAdmin ], tutorialController.update);
 
     // Delete a Tutorial with id, only admin can delete 
-    router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorialController.delete);
+    // router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorialController.delete);
 
     // Delete all Tutorials, only admin can delete 
-    router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], tutorialController.deleteAll);
+    // router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], tutorialController.deleteAll);
 
     
 }
