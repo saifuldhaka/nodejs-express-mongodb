@@ -10,28 +10,27 @@ module.exports = function(app) {
     next();
   });
 
+  var router = require("express").Router();
+  app.use("/api/users", router);
+
   app.get("/api/user/all", userController.allAccess);
 
-  app.get("/api/user/user", [authJwt.verifyToken], userController.userBoard);
 
-  app.post("/api/user/change-password", [authJwt.verifyToken], userController.changePassword);
 
+  router.get("/user", [authJwt.verifyToken], userController.userBoard);
+  router.get("/mod",[authJwt.verifyToken, authJwt.isModerator], userController.moderatorBoard );
+  router.get("/admin", [authJwt.verifyToken, authJwt.isAdmin], userController.adminBoard);
+
+
+
+
+  router.post("/change-password", [authJwt.verifyToken], userController.changePassword);
+  router.post("/create-profile", [authJwt.verifyToken], userController.createProfile);
+  router.get("/view-profile/:id", [authJwt.verifyToken], userController.viewProfile);
+  router.post("/update-profile/:id", [authJwt.verifyToken], userController.updateProfile);
+
+
+  router.get("/user-list/:id", [authJwt.verifyToken, authJwt.isAdmin], userController.getUserList);
   
-  app.post("/api/user/create-profile", [authJwt.verifyToken], userController.createProfile);
-  app.get("/api/user/view-profile/:id", [authJwt.verifyToken], userController.viewProfile);
-  app.post("/api/user/update-profile/:id", [authJwt.verifyToken], userController.updateProfile);
 
-  
-  
-  app.get(
-    "/api/user/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    userController.moderatorBoard
-  );
-
-  app.get(
-    "/api/user/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    userController.adminBoard
-  );
 };

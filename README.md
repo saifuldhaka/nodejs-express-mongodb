@@ -57,9 +57,7 @@ Admin user
 => view profile details &#10003;<br />
 => update profile &#10003;<br />
 => change password &#10003;<br />
-=> Moderator list (add , edit, delete )<br />
-=> Author list<br />
-=> Registered User list<br />
+=> Admin / Moderator / Author / User list - Role [admin, moderator, author, user ] &#10003;<br />
 => can see the tutorial list and search<br />
 => can read the full tutorial<br />
 => can publish or un-publish the tutorial<br />

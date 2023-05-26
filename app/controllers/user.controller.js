@@ -5,6 +5,7 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
 const Profile = db.profile;
+const Role = db.role;
 
 
 const loginUserId = '';
@@ -232,5 +233,76 @@ exports.viewProfile = (req, res) => {
         .status(500)
         .send({message: "Error retrieving User with id = " + id});
     });
+
+}
+
+
+exports.getAuthorList = async (req, res, next) => {
+  const roleType = req.params.id;
+}
+
+exports.getAuthorList = async (req, res, next) => {
+  const roleType = req.params.id;
+}
+
+exports.getUserList = async (req, res, next) => {
+  const roleName = req.params.id;
+
+  const { page, limit, name } = req.query;
+
+  const currentPage = parseInt(page) || 1; // get page number from query params, default to 1
+  const pageSize = parseInt(limit) || 10; // get limit number from query params, default to 10
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * currentPage;
+  
+  // const role = await Role.findOne({name: roleType}).select("id");
+
+  // const roleId = role._id;
+
+  var conditions = { 
+    role: roleName,
+    sort: ({ createdAt: -1 })
+  };
+
+  if(name){
+    conditions.username = { $regex: new RegExp(name), $options: "i" }
+  }
+
+  const users = await User.find(conditions)
+                              .skip(startIndex)
+                              .limit(pageSize)
+                              .select('id username email');
+
+
+  const totalUser = await User.countDocuments(conditions);
+
+  const totalPages = Math.ceil(totalUser / pageSize);
+  const previousPage = currentPage > 1 ? currentPage - 1 : null;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+
+  const profile = await Profile.find().select('user_id first_name last_name address_line1 address_line2 city state country'); 
+  
+  const results = users.map(user => {
+    const details = profile.find(profile => profile.user_id.toString() === user._id.toString()); 
+    return {
+      details,
+      user
+    };
+  });
+
+
+  res.send({
+    users: results,
+    previous_page: previousPage,
+    next_page: nextPage,
+    total_pages: totalPages,
+    current_page : currentPage,
+    total_users :totalUser,
+    page_limit: pageSize
+  });
+
+
+  
+  
 
 }
