@@ -55,7 +55,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"user\"]\r\n}",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"user\"],\r\n    \"role\": \"user\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -85,7 +85,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"123456\"\r\n}",
+							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -109,12 +109,12 @@
 					"response": []
 				},
 				{
-					"name": "Get tutorials",
+					"name": "Tutorials List",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/tutorials/tutorials?page=0&size=10",
+							"raw": "http://localhost:8080/api/tutorials/tutorials?page=0&size=10&title=",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -133,7 +133,39 @@
 								{
 									"key": "size",
 									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tutorial Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0MmIyYmY0ZDc2ZTE4ZTQ3ODBjZiIsImlhdCI6MTY4NDcyMzgxOSwiZXhwIjoxNjg0ODEwMjE5fQ.xOvmLe0Jtwe-crClA-4uhcuCFyzj_aijTkv8l6iOkpw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorials/645b14dd464e3ef8812b4bd5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorials",
+								"645b14dd464e3ef8812b4bd5"
 							]
 						}
 					},
@@ -182,12 +214,12 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0MmIyYmY0ZDc2ZTE4ZTQ3ODBjZiIsImlhdCI6MTY4Mzg4MTQyNywiZXhwIjoxNjgzOTY3ODI3fQ.1mDaTLP7Em7GmLGiUg5rcUlaJr59jAuONDcXb_nKODg",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0MmIyYmY0ZDc2ZTE4ZTQ3ODBjZiIsImlhdCI6MTY4NDM5NzUzNywiZXhwIjoxNjg0NDgzOTM3fQ.FFIycFeHbfoWIUj6NQPRT3mE5HXOov8LQTF9qKhwSV8",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/tutorials/purchased-tutorials?page=1&limit=10",
+							"raw": "http://localhost:8080/api/tutorials/purchased-tutorials?page=2&limit=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -201,11 +233,11 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "limit",
-									"value": "10"
+									"value": "2"
 								}
 							]
 						}
@@ -224,7 +256,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"author2\",\r\n    \"email\": \"author2@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"author\"]\r\n}",
+							"raw": "{\r\n    \"username\": \"author2\",\r\n    \"email\": \"author2@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"author\"],\r\n    \"role\": \"author\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -284,13 +316,13 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWRjMzkyYTVkMDcxMTQ2NDM5NCIsImlhdCI6MTY4NDEyNjIzNSwiZXhwIjoxNjg0MjEyNjM1fQ.08zKo43QkZotIXazYaJQRVR_XerPrj_VVBfd7WIXk6c",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDI5MDg1OCwiZXhwIjoxNjg0Mzc3MjU4fQ.kmlCZKvIhMzpzxGVqTd4yVYWVn1lGFYa2-c8pws0qJI",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Generated Lorem Ipsum 13 A-0\",\r\n    \"published\": true,\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod. <br />Sagittis eu volutpat odio facilisis mauris sit amet massa. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Feugiat sed lectus vestibulum mattis ullamcorper velit. Praesent elementum facilisis leo vel. Mattis molestie a iaculis at erat pellentesque. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Condimentum lacinia quis vel eros donec. Consectetur purus ut faucibus pulvinar elementum. Lorem ipsum dolor sit amet consectetur adipiscing. Imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis nunc eget lorem dolor sed. Enim ut sem viverra aliquet eget sit amet tellus cras. Amet mattis vulputate enim nulla aliquet porttitor lacus. Lacus sed turpis tincidunt id aliquet risus feugiat. Morbi quis commodo odio aenean sed adipiscing diam. Sed velit dignissim sodales ut eu. Neque vitae tempus quam pellentesque nec.<br />Viverra orci sagittis eu volutpat. Amet dictum sit amet justo donec enim diam vulputate. In arcu cursus euismod quis viverra nibh cras. Diam ut venenatis tellus in metus vulputate eu scelerisque felis. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Congue quisque egestas diam in arcu. Ullamcorper malesuada proin libero nunc consequat. Neque ornare aenean euismod elementum nisi. Pellentesque habitant morbi tristique senectus et netus et. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Generated Lorem Ipsum 14 A-0\",\r\n    \"published\": true,\r\n    \"abstract\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod.\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod. <br />Sagittis eu volutpat odio facilisis mauris sit amet massa. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Feugiat sed lectus vestibulum mattis ullamcorper velit. Praesent elementum facilisis leo vel. Mattis molestie a iaculis at erat pellentesque. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Condimentum lacinia quis vel eros donec. Consectetur purus ut faucibus pulvinar elementum. Lorem ipsum dolor sit amet consectetur adipiscing. Imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis nunc eget lorem dolor sed. Enim ut sem viverra aliquet eget sit amet tellus cras. Amet mattis vulputate enim nulla aliquet porttitor lacus. Lacus sed turpis tincidunt id aliquet risus feugiat. Morbi quis commodo odio aenean sed adipiscing diam. Sed velit dignissim sodales ut eu. Neque vitae tempus quam pellentesque nec.<br />Viverra orci sagittis eu volutpat. Amet dictum sit amet justo donec enim diam vulputate. In arcu cursus euismod quis viverra nibh cras. Diam ut venenatis tellus in metus vulputate eu scelerisque felis. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Congue quisque egestas diam in arcu. Ullamcorper malesuada proin libero nunc consequat. Neque ornare aenean euismod elementum nisi. Pellentesque habitant morbi tristique senectus et netus et. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -320,7 +352,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4MzYyNDg0OSwiZXhwIjoxNjgzNzExMjQ5fQ.8mD5S1FntZFlCb2ZhthnJ-s5QR1WakJlAFtBEgGU2ZA",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDM5NjYyMywiZXhwIjoxNjg0NDgzMDIzfQ.PAtdopi1PQiCLCe6ZGdUJf2b67LGwo-_jaLVcb3rWKQ",
 								"type": "text"
 							}
 						],
@@ -361,13 +393,13 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWRjMzkyYTVkMDcxMTQ2NDM5NCIsImlhdCI6MTY4NDEyNjIzNSwiZXhwIjoxNjg0MjEyNjM1fQ.08zKo43QkZotIXazYaJQRVR_XerPrj_VVBfd7WIXk6c",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDgyNjAzMCwiZXhwIjoxNjg0OTEyNDMwfQ.TUglVaZQFe9JV1sUjkHJoVgIemUlXr4li7e61Csa5Fc",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Generated Lorem Ipsum 13 A-0\",\r\n    \"published\": true,\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod. <br />Sagittis eu volutpat odio facilisis mauris sit amet massa. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Feugiat sed lectus vestibulum mattis ullamcorper velit. Praesent elementum facilisis leo vel. Mattis molestie a iaculis at erat pellentesque. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Condimentum lacinia quis vel eros donec. Consectetur purus ut faucibus pulvinar elementum. Lorem ipsum dolor sit amet consectetur adipiscing. Imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis nunc eget lorem dolor sed. Enim ut sem viverra aliquet eget sit amet tellus cras. Amet mattis vulputate enim nulla aliquet porttitor lacus. Lacus sed turpis tincidunt id aliquet risus feugiat. Morbi quis commodo odio aenean sed adipiscing diam. Sed velit dignissim sodales ut eu. Neque vitae tempus quam pellentesque nec.<br />Viverra orci sagittis eu volutpat. Amet dictum sit amet justo donec enim diam vulputate. In arcu cursus euismod quis viverra nibh cras. Diam ut venenatis tellus in metus vulputate eu scelerisque felis. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Congue quisque egestas diam in arcu. Ullamcorper malesuada proin libero nunc consequat. Neque ornare aenean euismod elementum nisi. Pellentesque habitant morbi tristique senectus et netus et. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Generated Lorem Ipsum 13 A-0\",\r\n    \"abstract\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod.\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat in ante metus dictum at tempor. Morbi blandit cursus risus at ultrices mi tempus imperdiet nulla. Vestibulum mattis ullamcorper velit sed. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet nisl purus in. Dolor sit amet consectetur adipiscing elit. Ornare quam viverra orci sagittis eu. Nulla porttitor massa id neque aliquam vestibulum. Etiam sit amet nisl purus in mollis. Mauris pharetra et ultrices neque ornare aenean euismod. <br />Sagittis eu volutpat odio facilisis mauris sit amet massa. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Feugiat sed lectus vestibulum mattis ullamcorper velit. Praesent elementum facilisis leo vel. Mattis molestie a iaculis at erat pellentesque. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Condimentum lacinia quis vel eros donec. Consectetur purus ut faucibus pulvinar elementum. Lorem ipsum dolor sit amet consectetur adipiscing. Imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis nunc eget lorem dolor sed. Enim ut sem viverra aliquet eget sit amet tellus cras. Amet mattis vulputate enim nulla aliquet porttitor lacus. Lacus sed turpis tincidunt id aliquet risus feugiat. Morbi quis commodo odio aenean sed adipiscing diam. Sed velit dignissim sodales ut eu. Neque vitae tempus quam pellentesque nec.<br />Viverra orci sagittis eu volutpat. Amet dictum sit amet justo donec enim diam vulputate. In arcu cursus euismod quis viverra nibh cras. Diam ut venenatis tellus in metus vulputate eu scelerisque felis. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Congue quisque egestas diam in arcu. Ullamcorper malesuada proin libero nunc consequat. Neque ornare aenean euismod elementum nisi. Pellentesque habitant morbi tristique senectus et netus et. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,7 +407,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/tutorials/tutorials/6461c01eda59d0fc993850b0",
+							"raw": "http://localhost:8080/api/tutorials/tutorials/645b14f8464e3ef8812b4be5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -385,7 +417,7 @@
 								"api",
 								"tutorials",
 								"tutorials",
-								"6461c01eda59d0fc993850b0"
+								"645b14f8464e3ef8812b4be5"
 							]
 						}
 					},
@@ -398,7 +430,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWRjMzkyYTVkMDcxMTQ2NDM5NCIsImlhdCI6MTY4NDEyNjIzNSwiZXhwIjoxNjg0MjEyNjM1fQ.08zKo43QkZotIXazYaJQRVR_XerPrj_VVBfd7WIXk6c",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDM5NjYyMywiZXhwIjoxNjg0NDgzMDIzfQ.PAtdopi1PQiCLCe6ZGdUJf2b67LGwo-_jaLVcb3rWKQ",
 								"type": "text"
 							}
 						],
@@ -425,7 +457,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDIzMDM4OCwiZXhwIjoxNjg0MzE2Nzg4fQ.7I-94a3zBLbkoFkzLGceY_UQANk9_J_-zTQjg2-xUG8",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDM5NjYyMywiZXhwIjoxNjg0NDgzMDIzfQ.PAtdopi1PQiCLCe6ZGdUJf2b67LGwo-_jaLVcb3rWKQ",
 								"type": "text"
 							}
 						],
@@ -454,6 +486,114 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Tutorial List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorials?page=1&limit=10&title=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorials"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Purchased tutorials",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDQ3MzMxNiwiZXhwIjoxNjg0NTU5NzE2fQ.iR9ALb7YD2zaWqXfNchOo7k56Y5hzvWHAky4gOjqdlE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/purchased-tutorials?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"purchased-tutorials"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchase a tutorials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWU4MzkyYTVkMDcxMTQ2NDM5YSIsImlhdCI6MTY4Mzc5MDk0OCwiZXhwIjoxNjgzODc3MzQ4fQ.RG_BzU5YiuwMbrFyqVyMN150s_6NlkfPS2_SonYB7iI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tutorial_id\": \"645b14f2464e3ef8812b4be1\",\r\n    \"author_id\": \"6434d2f2b5b07b04d25e0533\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/purchased-tutorials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"purchased-tutorials"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -461,13 +601,43 @@
 			"name": "Modetaror",
 			"item": [
 				{
-					"name": "signup",
+					"name": "signup moderator 2",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"moderator\"]\r\n}",
+							"raw": "{\r\n    \"username\": \"moderator2\",\r\n    \"email\": \"moderator2@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"moderator\"],\r\n    \"role\": \"moderator\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup moderator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"moderator\",\r\n    \"email\": \"moderator2@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"moderator\"],\r\n    \"role\": \"moderator\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -540,6 +710,112 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Unpublished Tutorial List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWM3MzkyYTVkMDcxMTQ2NDM4ZSIsImlhdCI6MTY4NDcyOTE2MCwiZXhwIjoxNjg0ODE1NTYwfQ.xfCDw2HFL99xaOdQdT9Mfkua1IG9IG27MpireepNbbE",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/unpublished-tutorials?page=1&limit=10&title=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"unpublished-tutorials"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Publish Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWM3MzkyYTVkMDcxMTQ2NDM4ZSIsImlhdCI6MTY4NDgyNTE2MiwiZXhwIjoxNjg0OTExNTYyfQ.IgFgM1KJ1yOr5f5B3wssGdLJExipjh42bYsy3eLll2E",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"published\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/change-publish-status/645b14f8464e3ef8812b4be5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"change-publish-status",
+								"645b14f8464e3ef8812b4be5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tutorial Review",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWM3MzkyYTVkMDcxMTQ2NDM4ZSIsImlhdCI6MTY4NDkxNjA0MCwiZXhwIjoxNjg1MDAyNDQwfQ.IpI-mfnNxqGMZfkKvC7DPLNJzWoVl01xSWHyCjqtsSM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/tutorials/tutorial-review/645b14dd464e3ef8812b4bd5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tutorials",
+								"tutorial-review",
+								"645b14dd464e3ef8812b4bd5"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -553,7 +829,37 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"admin\"]\r\n}",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"admin\", \"moderator\"],\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup admin 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"admin\", \"moderator\"],\r\n    \"role\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -694,6 +1000,174 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "User List - Role = user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOTRjMzkyYTVkMDcxMTQ2NDM4OCIsImlhdCI6MTY4NTA5MjAxMywiZXhwIjoxNjg1MTc4NDEzfQ.wx9yaGPv1Rgz_bLLf0KnowSEs2_MGR2ZjLv8lUTG6HQ",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/user-list/user?page=1&limit=10&name=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"user-list",
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Author List - Role = author",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOTRjMzkyYTVkMDcxMTQ2NDM4OCIsImlhdCI6MTY4NTA2NTk2NiwiZXhwIjoxNjg1MTUyMzY2fQ.pgT19HyGuz-6d2EAFNlM7Xju0bdwZk93BG_ncUOKYuA",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/user-list/author?page=1&limit=10&name=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"user-list",
+								"author"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Moderator List - Role = moderator",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOTRjMzkyYTVkMDcxMTQ2NDM4OCIsImlhdCI6MTY4NTA2NTk2NiwiZXhwIjoxNjg1MTUyMzY2fQ.pgT19HyGuz-6d2EAFNlM7Xju0bdwZk93BG_ncUOKYuA",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/user-list/moderator?page=1&limit=10&name=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"user-list",
+								"moderator"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin List - Role = admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOTRjMzkyYTVkMDcxMTQ2NDM4OCIsImlhdCI6MTY4NTA2NTk2NiwiZXhwIjoxNjg1MTUyMzY2fQ.pgT19HyGuz-6d2EAFNlM7Xju0bdwZk93BG_ncUOKYuA",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/user-list/admin?page=1&limit=10&name=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"user-list",
+								"admin"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -773,7 +1247,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/user/user",
+					"raw": "http://localhost:8080/api/users/user",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -781,7 +1255,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"user",
+						"users",
 						"user"
 					]
 				}
@@ -809,7 +1283,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/user/change-password",
+					"raw": "http://localhost:8080/api/users/change-password",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -817,7 +1291,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"user",
+						"users",
 						"change-password"
 					]
 				}
@@ -845,7 +1319,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/user/create-profile",
+					"raw": "http://localhost:8080/api/users/create-profile",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -853,7 +1327,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"user",
+						"users",
 						"create-profile"
 					]
 				}
@@ -867,12 +1341,12 @@
 				"header": [
 					{
 						"key": "x-access-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDAyOWU4MzkyYTVkMDcxMTQ2NDM5YSIsImlhdCI6MTY4MzcwMDI5MSwiZXhwIjoxNjgzNzg2NjkxfQ.qsVnap8hDPILxFC5kfe3KU5oS9a6sAFukzHI2N3SRRQ",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzRkMmYyYjViMDdiMDRkMjVlMDUzMyIsImlhdCI6MTY4NDkxNjM2NywiZXhwIjoxNjg1MDAyNzY3fQ.tLKTT1FFxbE5dHFG4B-Rje_jOeqIA2gnG4BNQjgrQYA",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/user/view-profile/6434d2f2b5b07b04d25e0533",
+					"raw": "http://localhost:8080/api/users/view-profile/6434d2f2b5b07b04d25e0533",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -880,7 +1354,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"user",
+						"users",
 						"view-profile",
 						"6434d2f2b5b07b04d25e0533"
 					]
@@ -909,7 +1383,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/user/update-profile/645b19a53ef2acdb2895e8ee",
+					"raw": "http://localhost:8080/api/users/update-profile/645b19a53ef2acdb2895e8ee",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -917,7 +1391,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"user",
+						"users",
 						"update-profile",
 						"645b19a53ef2acdb2895e8ee"
 					]
