@@ -14,6 +14,8 @@ db.role = require('./role.model');
 db.tutorial = require("./tutorial.model.js")(mongoose, mongoosePaginate);
 db.profile = require("./profile.model");
 db.purchasedTutorial = require("./purchasedTutorial.model.js")(mongoose, mongoosePaginate);
+db.category = require("./category.model");
+db.subCategory = require("./subCategory.model");
 
 
 
