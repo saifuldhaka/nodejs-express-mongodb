@@ -58,9 +58,9 @@ Admin user
 => update profile &#10003;<br />
 => change password &#10003;<br />
 => Admin / Moderator / Author / User list - Role [admin, moderator, author, user ] &#10003;<br />
-=> can see the tutorial list and search<br />
-=> can read the full tutorial<br />
-=> can publish or un-publish the tutorial<br />
+=> can see the tutorial list and search &#10003;<br />
+=> can read the full tutorial &#10003;<br />
+=> can publish or un-publish the tutorial &#10003;<br />
 => order list <br />
 
 ** Follow the postman collection for testing
