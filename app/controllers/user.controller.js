@@ -284,10 +284,17 @@ exports.getUserList = async (req, res, next) => {
   
   const results = users.map(user => {
     const details = profile.find(profile => profile.user_id.toString() === user._id.toString()); 
-    return {
-      details,
-      user
-    };
+    if(details){
+      return {
+        details,
+        user
+      };
+    }else{
+      return {
+        details : null,
+        user
+      };
+    }
   });
 
 
