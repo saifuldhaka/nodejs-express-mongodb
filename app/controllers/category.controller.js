@@ -30,10 +30,15 @@ const findUserId = (req, res, next) => {
 
 exports.getAllCategory = async (req, res, next) => {
 
+  res.status(200)
+    .send({ message: "Get All Category" });
+
 }
 
-exports.getAllSubCategory = async (req, res, next) => {
 
-}
 
-exports.getAllCategoriesSubCategory = async (req, res, next) => {}
+// exports.getAllSubCategory = async (req, res, next) => {
+
+// }
+
+// exports.getAllCategoriesSubCategory = async (req, res, next) => {}
